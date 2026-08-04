@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/03 17:23:25 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/04 20:19:13 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "server.hpp"
+#include "Server.hpp"
 #include <fcntl.h>
 // check le port et la password
-bool server::CheckAv(char **av)
+bool Server::CheckAv(char **av)
 {
 
     this->_port = atoi(av[1]);
@@ -31,7 +31,7 @@ bool server::CheckAv(char **av)
     return (false);
 }
 
-bool server::isStringPrintable(const std::string &str)
+bool Server::isStringPrintable(const std::string &str)
 {
     for (size_t i = 0; i < str.length(); ++i)
     {
@@ -41,18 +41,18 @@ bool server::isStringPrintable(const std::string &str)
     return false;
 }
 
-void server::RunServer()
+void Server::RunServer()
 {
     // ouvre le fd
-    this->_ServerFd = socket(AF_INET, SOCK_STREAM, 0);
-    if (this->_ServerFd == -1)
+    this->_serverFd = socket(AF_INET, SOCK_STREAM, 0);
+    if (this->_serverFd == -1)
         throw std::runtime_error("Erreur : impossible de creer le serveur.");
     int opt = 1;
     // permet que le port soit reutilisable directement apres avoir etait liberer
-    if (setsockopt(this->_ServerFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
+    if (setsockopt(this->_serverFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
         throw std::runtime_error("Erreur : impossible de configurer loption SO_REUSEADDR.");
     // rend le socket non bloquant
-    if (fcntl(this->_ServerFd, F_SETFL, O_NONBLOCK) == -1)
+    if (fcntl(this->_serverFd, F_SETFL, O_NONBLOCK) == -1)
         throw std::runtime_error("Erreur : impossible de passer le socket en non bloquant.");
 
     // plus tard ke terminer

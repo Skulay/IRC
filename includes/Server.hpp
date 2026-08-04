@@ -6,12 +6,12 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/04 20:18:33 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/04 20:17:11 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Server_HPP
-#define Server_HPP
+#ifndef SERVER_HPP
+#define SERVER_HPP
 
 #include <string>
 #include <iostream>
@@ -28,23 +28,23 @@
 class Server
 {
 private:
-    int _port; // port du Server
-    std::string _PassWord; // PassWord du Server
-    int _serverFd;
+    int _port; // port du server
+    std::string _PassWord; // PassWord du server
+    int _ServerFd;
 
 public:
-    Server();
-    ~Server();
+    server();
+    ~server();
     bool CheckAv(char **av);
     bool isStringPrintable(const std::string &str);
     void RunServer();
 };
 
-Server::Server()
+server::server()
 {
 }
 
-Server::~Server()
+server::~server()
 {
 }
 

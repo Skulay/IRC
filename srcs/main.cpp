@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:17:55 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/03 15:01:35 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/04 20:17:49 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/server.hpp"
+#include "../includes/Server.hpp"
 
 int main(int ac, char **av)
 {
