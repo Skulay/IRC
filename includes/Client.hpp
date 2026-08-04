@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.hpp                                         :+:      :+:    :+:   */
+/*   Client.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,17 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-class client
+class Client
 {
 	private:
 		std::string nickname;
 		std::string username;
 
 	public:
-		client(); // constructeur
-		client(const client& src); // constructeur de copy
-		client& operator=(const client& src); // operator=
-		~client(); // destructeur
+		Client(); // constructeur
+		Client(const Client& src); // constructeur de copy
+		Client& operator=(const Client& src); // operator=
+		~Client(); // destructeur
 
 			// GETTERR
 		std::string getNickname();
