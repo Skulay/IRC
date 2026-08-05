@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/05 15:01:52 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/05 17:15:36 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,14 @@ public:
     ~Server();
     bool CheckAv(char **av);
     bool isStringPrintable(const std::string &str);
-    void RunServer();
+    void RunServer(void);
+    bool LoopServer(void);
+    void AcceptNewClient(int fd);
+    void ReceiveFromClient(int fd);
 };
+
+
+
+
 
 #endif
