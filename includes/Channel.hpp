@@ -10,27 +10,65 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*		 - Change the channel’s mode:
-		· i: Set/remove Invite-only channel										| variable mise mais pas de fonction
-		· t: Set/remove the restrictions of the TOPIC command to channel		| variable mise mais pas de fonction
-		operators
-		· k: Set/remove the channel key (password)								| variable mise mais pas de fonction
-		· o: Give/take channel operator privilege								| ????? contener pour gerer une liste de membre ???
-		· l: Set/remove the user limit to channel								| variable mise mais pas de fonction
-*/
+#ifndef CHANNEL_HPP
+#define CHANNEL_HPP
+
+#include <string>
+#include <vector>
+
 class Channel
 {
 	private:
-		std::string	name;
-		std::string	topic; // genre TOPIC #channel ou TOPIC #channel :nouveau topic ici <- pour le modifier
-		std::string	key; // pour le mode -k, nommer key au lieux de password parce ->
-						 // -> que si on a deja password quelque part sa seras plus clair
-		bool		inviteOnly; // 
-		bool		topicRestricted; // mode +t
-		size_t		userLimit; // je te fait pas un dessin ta capter, mode +l (0 = pas de limite)
+		std::string					_name;
+		std::string					_topic;
+		std::string					_key;
+		std::vector<std::string>	_members;
+		std::vector<std::string>	_operators;
+		std::vector<std::string>	_invited;
+		bool						_inviteOnly;
+		bool						_topicRestricted;
+		size_t						_userLimit;
+
 	public:
-		channel(); //constructeur
-		channel(channel& src); //contructeur de copy
-		channel& operator=(const channel& src); // operator=
-		~channel(); // destructeur
-}
+		Channel();
+		Channel(const std::string& name);
+		Channel(const Channel& src);
+		Channel& operator=(const Channel& src);
+		~Channel();
+
+		// Getters
+		std::string	getName() const;
+		std::string	getTopic() const;
+		std::string	getKey() const;
+		bool		isInviteOnly() const;
+		bool		isTopicRestricted() const;
+		size_t		getUserLimit() const;
+
+		// Setters
+		void	setTopic(const std::string& topic);
+		void	setKey(const std::string& key);
+		void	setInviteOnly(bool value);
+		void	setTopicRestricted(bool value);
+		void	setUserLimit(size_t limit);
+		void	removeKey();
+		void	removeUserLimit();
+
+		//membre
+		void	addMember(const std::string& nickname);
+		void	removeMember(const std::string& nickname);
+		bool	hasMember(const std::string& nickname) const;
+
+		// op
+		void	addOperator(const std::string& nickname);
+		void	removeOperator(const std::string& nickname);
+		bool	isOperator(const std::string& nickname) const;
+
+		// Invit
+		void	addInvited(const std::string& nickname);
+		bool	isInvited(const std::string& nickname) const;
+
+		// isFull solo dans son coin
+		bool	isFull() const;
+};
+
+#endif
