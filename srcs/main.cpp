@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:17:55 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/05 01:06:05 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/05 14:36:01 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int main(int ac, char **av)
 {
-    server server;
+    Server server;
     if (ac != 3)
     {
         std::cerr << "Erreur : Mauvais nombre d'arguments." << std::endl;

@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/05 12:21:24 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/05 15:03:47 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,30 @@ void Server::RunServer()
     // Attachement du socket au port avec bind()
     if (bind(this->_ServerFd, (struct sockaddr *)&test, sizeof(test)) == -1)
         throw std::runtime_error("Erreur");
+    // mais le socket en attente de connexion entrante
+    if (listen(this->_ServerFd, SOMAXCONN) == -1)
+        throw std::runtime_error("error");
+    this->_EpollFD = epoll_create1(0);
+    if (this->_EpollFD == -1)
+        throw std::runtime_error("Erreur");
+    struct epoll_event struct_epoll;
+    memset(&struct_epoll, 0, sizeof(struct_epoll));
+    struct_epoll.events = EPOLLIN; //  previens si des donnees ou une nouvelle commexion est en attente
+    struct_epoll.data.fd = this->_ServerFd;
+    if (epoll_ctl(this->_EpollFD, EPOLL_CTL_ADD, this->_ServerFd, &struct_epoll) == -1)
+        throw std::runtime_error("epoll ctl fail\n");
+
+    while (true)
+    {
+        int nfds = epoll_wait(this->_EpollFD, this->events, 10, -1);
+        nfds = 98;
+    }
+}
+
+Server::Server()
+{
+}
+
+Server::~Server()
+{
 }

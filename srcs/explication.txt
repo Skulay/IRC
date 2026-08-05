@@ -24,3 +24,7 @@ this->_ServerFd : C'est ta cible. Tu dis à la fonction de modifier la prise de 
 F_SETFL (Set Flags) : Tu annonces l'action. Tu dis à l'ordinateur "Je veux définir (SET) un nouveau réglage (FLAG) sur ce socket".
 
 O_NONBLOCK (Le réglage) : C'est l'ordre clé. Tu passes la prise en mode non-bloquant.
+
+
+
+https://man.developpez.com/Archivage-ancien-man-pas-supprimer/man4/epoll.4.php
