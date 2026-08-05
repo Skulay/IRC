@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/05 12:05:14 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/05 15:01:52 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@
 class Server
 {
 private:
-    int _port; // port du server
+    int _port;             // port du server
     std::string _PassWord; // PassWord du server
     int _ServerFd;
+    int _EpollFD; // fd qui srocke tout mos clients
+    struct epoll_event events[10];
 
 public:
     Server();
@@ -39,13 +41,5 @@ public:
     bool isStringPrintable(const std::string &str);
     void RunServer();
 };
-
-Server::Server()
-{
-}
-
-Server::~Server()
-{
-}
 
 #endif

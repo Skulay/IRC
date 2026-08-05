@@ -1,19 +1,16 @@
-NAME		= ircserv
+NAME        = ircserv
+CXX         = c++
+CXXFLAGS    = -std=c++98
 
-CXX			= c++
-CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
+SRCDIR      = srcs
+INCDIR      = includes
 
-SRCDIR		= src
-INCDIR		= includes
+SRCS        = $(SRCDIR)/main.cpp \
+              $(SRCDIR)/server.cpp \
+              $(SRCDIR)/Client.cpp
 
-SRCS		= $(SRCDIR)/main.cpp \
-			  $(SRCDIR)/Client.cpp \
-			  $(SRCDIR)/Server.cpp \
-			  $(SRCDIR)/Channel.cpp
-
-OBJS		= $(SRCS:.cpp=.o)
-
-INCLUDES	= -I$(INCDIR)
+OBJS        = $(SRCS:.cpp=.o)
+INCLUDES    = -I$(INCDIR)
 
 all: $(NAME)
 
