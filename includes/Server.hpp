@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.hpp                                         :+:      :+:    :+:   */
+/*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/04 20:17:11 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/05 12:05:14 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,18 @@ private:
     int _ServerFd;
 
 public:
-    server();
-    ~server();
+    Server();
+    ~Server();
     bool CheckAv(char **av);
     bool isStringPrintable(const std::string &str);
     void RunServer();
 };
 
-server::server()
+Server::Server()
 {
 }
 
-server::~server()
+Server::~Server()
 {
 }
 

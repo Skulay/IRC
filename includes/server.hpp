@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/04 20:18:33 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/05 12:06:33 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ class Server
 private:
     int _port; // port du Server
     std::string _PassWord; // PassWord du Server
-    int _serverFd;
+    int _ServerFd;
 
 public:
     Server();

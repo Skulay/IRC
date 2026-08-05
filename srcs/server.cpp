@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/04 20:19:13 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/05 12:21:24 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,29 @@ bool Server::isStringPrintable(const std::string &str)
 void Server::RunServer()
 {
     // ouvre le fd
-    this->_serverFd = socket(AF_INET, SOCK_STREAM, 0);
-    if (this->_serverFd == -1)
+    this->_ServerFd = socket(AF_INET, SOCK_STREAM, 0);
+    if (this->_ServerFd == -1)
         throw std::runtime_error("Erreur : impossible de creer le serveur.");
     int opt = 1;
     // permet que le port soit reutilisable directement apres avoir etait liberer
-    if (setsockopt(this->_serverFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
+    if (setsockopt(this->_ServerFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
         throw std::runtime_error("Erreur : impossible de configurer loption SO_REUSEADDR.");
     // rend le socket non bloquant
-    if (fcntl(this->_serverFd, F_SETFL, O_NONBLOCK) == -1)
+    if (fcntl(this->_ServerFd, F_SETFL, O_NONBLOCK) == -1)
         throw std::runtime_error("Erreur : impossible de passer le socket en non bloquant.");
 
-    // plus tard ke terminer
+    // struct qui stocke les iformation dune adresse ip
     struct sockaddr_in test;
-    test.sin_port = this->_port;
+
+    // Nettoyage de la structure
+    memset(&test, 0, sizeof(test));
+
+    //  Remplissage des paramètres
+    test.sin_family = AF_INET;         // famille de ladresse (ipv4 pour nous)
+    test.sin_addr.s_addr = INADDR_ANY; // ecoute sur tout les adresse ip disponible sur la machine
+    test.sin_port = htons(this->_port);
+
+    // Attachement du socket au port avec bind()
+    if (bind(this->_ServerFd, (struct sockaddr *)&test, sizeof(test)) == -1)
+        throw std::runtime_error("Erreur");
 }
