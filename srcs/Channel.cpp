@@ -49,33 +49,15 @@ size_t Channel::getUserLimit() const { return _userLimit; }
 
 // ---- Setters ----
 
-void Channel::setTopic(const std::string& topic) {
-	_topic = topic;
-}
+void Channel::setTopic(const std::string& topic) { _topic = topic; }
+void Channel::setKey(const std::string& key) { _key = key; }
+void Channel::setInviteOnly(bool value) { _inviteOnly = value; }\
+void Channel::setTopicRestricted(bool value) { _topicRestricted = value; }\
+void Channel::setUserLimit(size_t limit) { _userLimit = limit; }
+void Channel::removeKey() { _key = ""; }
+void Channel::removeUserLimit() { _userLimit = 0; }
 
-void Channel::setKey(const std::string& key) {
-	_key = key;
-}
 
-void Channel::setInviteOnly(bool value) {
-	_inviteOnly = value;
-}
-
-void Channel::setTopicRestricted(bool value) {
-	_topicRestricted = value;
-}
-
-void Channel::setUserLimit(size_t limit) {
-	_userLimit = limit;
-}
-
-void Channel::removeKey() {
-	_key = "";
-}
-
-void Channel::removeUserLimit() {
-	_userLimit = 0;
-}
 
 void Channel::addMember(const std::string& nickname) {
 	if (!hasMember(nickname))
