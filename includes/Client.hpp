@@ -39,7 +39,7 @@ public:
 	void setBuffer(std::string buffer);
 
 	// UTIL
-	std::string addToBuffer(std::string bufferTwo);
+	void addToBuffer(std::string bufferTwo);
 };
 
 #endif

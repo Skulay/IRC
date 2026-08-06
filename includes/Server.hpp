@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/06 16:52:47 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/06 18:27:59 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <algorithm>
 #include <map>
 #include "Client.hpp"
+#include <algorithm>
 
 class Server
 {
@@ -46,6 +47,8 @@ public:
     bool LoopServer(void);
     void AcceptNewClient(int fd);
     void ReceiveFromClient(int fd);
+    void ParsBuffer(int fd);
+    void ExecuteCommand(std::string buffer, int fd);
 };
 
 #endif

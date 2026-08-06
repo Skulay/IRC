@@ -10,9 +10,6 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-
-
-
 #include "Client.hpp"
 
 Client::Client() : _nickname(""), _username(""), _buffer("") {}
@@ -48,8 +45,7 @@ void Client::setUsername(std::string userName) { _username = userName; }
 void Client::setBuffer(std::string buffer) { _buffer = buffer; }
 
 // ---- Util ----
-std::string Client::addToBuffer(std::string bufferTwo)
+void Client::addToBuffer(std::string bufferTwo)
 {
 	_buffer += bufferTwo;
-	return bufferTwo;
 }

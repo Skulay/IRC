@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/06 17:13:14 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/06 19:05:09 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ void Server::ReceiveFromClient(int fd)
     {
         Receive[DataClient] = '\0';
         _Client[fd].addToBuffer(Receive);
-        _Client[fd].getBuffer();
+        // std::string test = _Client[fd].getBuffer();
+        // printf("%s\n", test);
+        ParsBuffer(fd);
         // std::cout << "Données reçues : " << Receive << std::endl;
     }
     else if (DataClient == 0)
@@ -138,6 +140,45 @@ void Server::AcceptNewClient(int fd)
     }
     _Client[NewFdClient] = Client(); // stock le new cli
     std::cout << "Nouveau client accepté ! FD : " << NewFdClient << std::endl;
+}
+
+void Server::ParsBuffer(int fd)
+{
+    std::string buffer = _Client[fd].getBuffer();
+    size_t pos = buffer.find("\r\n");
+
+    while (pos != std::string::npos)
+    {
+        std::string command = buffer.substr(0, pos);
+
+        ExecuteCommand(command, fd);
+
+        buffer = buffer.substr(pos + 2);
+        _Client[fd].setBuffer(buffer);
+
+        pos = buffer.find("\r\n");
+    }
+}
+
+void Server::ExecuteCommand(std::string buffer, int fd)
+{
+    std::string cmd;
+    std::string argv;
+
+    size_t pos = buffer.find(" ");
+
+    if (pos == std::string::npos) 
+    {
+        cmd = buffer;
+        argv = ""; // Le reste est vide
+    }
+    else 
+    {
+        cmd = buffer.substr(0, pos); 
+        argv = buffer.substr(pos + 1);
+    }
+
+    std::cout << "Client " << fd << " | Commande: [" << cmd << "] | Args: [" << argv << "]\n";
 }
 
 Server::Server()
