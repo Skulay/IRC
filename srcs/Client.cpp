@@ -33,8 +33,10 @@ Client::~Client() {}
 
 std::string Client::getNickname() { return _nickname; }
 std::string Client::getUsername() { return _username; }
+std::string Client::getBuffer() { return _buffer; }
 
 // ---- Setters ----
 
 void Client::setNickname(std::string nickName) { _nickname = nickName; }
 void Client::setUsername(std::string userName) { _username = userName; }
+void Client::setBuffer(std::string buffer) { _buffer = buffer; }
