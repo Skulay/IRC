@@ -32,5 +32,8 @@ class Client
 		void setNickname(std::string nickName);
 		void setUsername(std::string userName);
 		void setBuffer(std::string buffer);
+
+			// UTIL
+		std::string addToBuffer(std::string bufferTwo)
 };
 

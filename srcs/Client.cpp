@@ -41,3 +41,6 @@ std::string Client::getBuffer() { return _buffer; }
 void Client::setNickname(std::string nickName) { _nickname = nickName; }
 void Client::setUsername(std::string userName) { _username = userName; }
 void Client::setBuffer(std::string buffer) { _buffer = buffer; }
+
+// ---- Util ----
+std::string addToBuffer(std::string bufferTwo) { _buffer += bufferTwo; }
