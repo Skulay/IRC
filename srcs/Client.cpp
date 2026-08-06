@@ -10,37 +10,31 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "Client.hpp"
+#include "Client.hpp"
 
-// Client::Client() : nickname(""), username("")
-// {
-// }
+Client::Client() : _nickname(""), _username("") {}
 
-// Client::Client(const Client& src)
-// {
-// 	*this = src;
-// }
+Client::Client(const Client& src) {
+	*this = src;
+}
 
-// Client& Client::operator=(const Client& src)
-// {
-// 	if (this != &src)
-// 	{
-// 		nickname = src.nickname;
-// 		username = src.username;
-// 	}
-// 	return *this;
-// }
+Client& Client::operator=(const Client& src) {
+	if (this != &src)
+	{
+		_nickname = src._nickname;
+		_username = src._username;
+	}
+	return *this;
+}
 
-// Client::~Client()
-// {
-// }
+Client::~Client() {}
 
-// std::string Client::getNickname() const
-// {
-// 	return nickname;
-// }
+// ---- Getters ----
 
-// std::string Client::getUsername() const
-// {
-// 	return username;
-// }
+std::string Client::getNickname() { return _nickname; }
+std::string Client::getUsername() { return _username; }
+
+// ---- Setters ----
+
+void Client::setNickname(std::string nickName) { _nickname = nickName; }
+void Client::setUsername(std::string userName) { _username = userName; }
