@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Channel.hpp"
+#include "Server.hpp"
 
 Channel::Channel() : _name(""), _topic(""), _key(""), _inviteOnly(false), _topicRestricted(false), _userLimit(0) {}
 

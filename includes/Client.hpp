@@ -10,30 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CLIENT_HPP
+#define CLIENT_HPP
+
+#include <fcntl.h>
+#include <string>
 class Client
 {
-	private:
-		std::string _nickname;
-		std::string _username;
-		std::string _buffer;
+private:
+	std::string _nickname;
+	std::string _username;
+	std::string _buffer;
 
-	public:
-		Client(); // constructeur
-		Client(const Client& src); // constructeur de copy
-		Client& operator=(const Client& src); // operator=
-		~Client(); // destructeur
+public:
+	Client();							  // constructeur
+	Client(const Client &src);			  // constructeur de copy
+	Client &operator=(const Client &src); // operator=
+	~Client();							  // destructeur
 
-			// GETTERR
-		std::string getNickname();
-		std::string getUsername();
-		std::string getBuffer();
+	// GETTERR
+	std::string getNickname();
+	std::string getUsername();
+	std::string getBuffer();
 
-			// SETTERR
-		void setNickname(std::string nickName);
-		void setUsername(std::string userName);
-		void setBuffer(std::string buffer);
+	// SETTERR
+	void setNickname(std::string nickName);
+	void setUsername(std::string userName);
+	void setBuffer(std::string buffer);
 
-			// UTIL
-		std::string addToBuffer(std::string bufferTwo)
+	// UTIL
+	std::string addToBuffer(std::string bufferTwo);
 };
 
+#endif
