@@ -12,7 +12,7 @@
 
 #include "Client.hpp"
 
-Client::Client() : _nickname(""), _username("") {}
+Client::Client() : _nickname(""), _username(""), _buffer("") {}
 
 Client::Client(const Client& src) {
 	*this = src;
@@ -23,6 +23,7 @@ Client& Client::operator=(const Client& src) {
 	{
 		_nickname = src._nickname;
 		_username = src._username;
+		_buffer = src._buffer;
 	}
 	return *this;
 }
