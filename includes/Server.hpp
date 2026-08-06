@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/05 17:15:36 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/06 13:21:06 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include <sys/epoll.h>
 #include <sstream>
 #include <algorithm>
+#include "Client.hpp"
+#include <map>
 
 class Server
 {
@@ -31,8 +33,9 @@ private:
     int _port;             // port du server
     std::string _PassWord; // PassWord du server
     int _ServerFd;
-    int _EpollFD; // fd qui srocke tout mos clients
+    int _EpollFD;
     struct epoll_event events[10];
+    std::map<int, Client> _client; // stock les fd de nos client leur info 
 
 public:
     Server();
@@ -44,9 +47,5 @@ public:
     void AcceptNewClient(int fd);
     void ReceiveFromClient(int fd);
 };
-
-
-
-
 
 #endif

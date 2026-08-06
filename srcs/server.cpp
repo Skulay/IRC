@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/05 17:50:33 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/06 13:55:17 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ void Server::ReceiveFromClient(int fd)
     else if (DataClient == 0)
     {
         std::cout << "Connexion fermée par le serveur." << std::endl;
+        close(fd); // surpime le cli
+        _client.erase(fd);
     }
     else
         std::cerr << "Erreur lors de la réception." << std::endl;
@@ -126,18 +128,19 @@ void Server::AcceptNewClient(int fd)
 {
     int NewFdClient = accept(this->_ServerFd, NULL, NULL);
     if (NewFdClient == -1)
-        throw std::runtime_error("error funtion accept");
+        throw std::runtime_error("casse toi fdp");
     struct epoll_event client_event;
     memset(&client_event, 0, sizeof(client_event));
-    client_event.events = EPOLLIN;     
-    client_event.data.fd = NewFdClient; 
+    client_event.events = EPOLLIN;
+    client_event.data.fd = NewFdClient;
 
     if (epoll_ctl(this->_EpollFD, EPOLL_CTL_ADD, NewFdClient, &client_event) == -1)
     {
         std::cerr << "Erreur : impossible d'ajouter le client à epoll." << std::endl;
         return;
     }
-    std::cout << "Nouveau client accepté ! FD : " << NewFdClient << std::endl;
+    _client[NewFdClient] = Client(); // sotck le new client dans le map
+    std::cout << "bienvenue chez nous " << NewFdClient << std::endl;
 }
 
 Server::Server()

@@ -12,18 +12,17 @@
 
 class Client
 {
-	private:
-		std::string nickname;
-		std::string username;
+private:
+	std::string nickname;
+	std::string username;
 
-	public:
-		Client(); // constructeur
-		Client(const Client& src); // constructeur de copy
-		Client& operator=(const Client& src); // operator=
-		~Client(); // destructeur
+public:
+	Client();							  // constructeur
+	Client(const Client &src);			  // constructeur de copy
+	Client &operator=(const Client &src); // operator=
+	~Client();							  // destructeur
 
-			// GETTERR
-		std::string getNickname();
-		std::string getUsername();
+	// GETTERR
+	std::string getNickname();
+	std::string getUsername();
 };
-
