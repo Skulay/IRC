@@ -45,7 +45,4 @@ void Client::setUsername(std::string userName) { _username = userName; }
 void Client::setBuffer(std::string buffer) { _buffer = buffer; }
 
 // ---- Util ----
-void Client::addToBuffer(std::string bufferTwo)
-{
-	_buffer += bufferTwo;
-}
+void Client::addToBuffer(std::string bufferTwo) { _buffer += bufferTwo; }
