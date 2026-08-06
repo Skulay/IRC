@@ -10,37 +10,37 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-// #include "Client.hpp"
+#include "Client.hpp"
 
-// Client::Client() : nickname(""), username("")
-// {
-// }
+Client::Client() : _nickname(""), _username(""), _buffer("") {}
 
-// Client::Client(const Client& src)
-// {
-// 	*this = src;
-// }
+Client::Client(const Client& src) {
+	*this = src;
+}
 
-// Client& Client::operator=(const Client& src)
-// {
-// 	if (this != &src)
-// 	{
-// 		nickname = src.nickname;
-// 		username = src.username;
-// 	}
-// 	return *this;
-// }
+Client& Client::operator=(const Client& src) {
+	if (this != &src)
+	{
+		_nickname = src._nickname;
+		_username = src._username;
+		_buffer = src._buffer;
+	}
+	return *this;
+}
 
-// Client::~Client()
-// {
-// }
+Client::~Client() {}
 
-// std::string Client::getNickname() const
-// {
-// 	return nickname;
-// }
+// ---- Getters ----
 
-// std::string Client::getUsername() const
-// {
-// 	return username;
-// }
+std::string Client::getNickname() { return _nickname; }
+std::string Client::getUsername() { return _username; }
+std::string Client::getBuffer() { return _buffer; }
+
+// ---- Setters ----
+
+void Client::setNickname(std::string nickName) { _nickname = nickName; }
+void Client::setUsername(std::string userName) { _username = userName; }
+void Client::setBuffer(std::string buffer) { _buffer = buffer; }
+
+// ---- Util ----
+std::string addToBuffer(std::string bufferTwo) { _buffer += bufferTwo; }

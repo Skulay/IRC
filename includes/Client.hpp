@@ -13,8 +13,9 @@
 class Client
 {
 	private:
-		std::string nickname;
-		std::string username;
+		std::string _nickname;
+		std::string _username;
+		std::string _buffer;
 
 	public:
 		Client(); // constructeur
@@ -25,5 +26,14 @@ class Client
 			// GETTERR
 		std::string getNickname();
 		std::string getUsername();
+		std::string getBuffer();
+
+			// SETTERR
+		void setNickname(std::string nickName);
+		void setUsername(std::string userName);
+		void setBuffer(std::string buffer);
+
+			// UTIL
+		std::string addToBuffer(std::string bufferTwo)
 };
 
