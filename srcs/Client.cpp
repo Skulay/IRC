@@ -50,12 +50,3 @@ void Client::addToBuffer(std::string bufferTwo)
 {
 	_buffer += bufferTwo;
 }
-
-void Client::SetNick(int IsValide)
-{
-	_HasNick = IsValide;
-}
-int Client::GetNickClient()
-{
-	return _HasNick;
-}
