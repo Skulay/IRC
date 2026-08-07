@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/07 16:40:09 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/07 18:00:29 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,15 +196,16 @@ void Server::ExecuteCommand(int fd, std::string Cmd, std::string Argv)
 {
     if (Cmd == "PASS")
     {
-        // printf("je suis dans le pass\n");
         ExecutePass(fd, Argv);
     }
     else if (Cmd == "NICK")
     {
+        printf("ligne 203 fichier server.cpp\n");
         ExecuteNick(fd, Argv);
     }
     else if (Cmd == "USER")
     {
+        ExecuteUser(Argv, fd);
     }
     else if (Cmd == "JOIN")
     {
@@ -227,6 +228,7 @@ void Server::ExecuteCommand(int fd, std::string Cmd, std::string Argv)
     else
         std::cerr << "this CMD" << Cmd << "is not available" << std::endl;
 }
+
 bool Server::IsValidNickName(std::string Argv, int fd)
 {
     if (Argv.empty())
