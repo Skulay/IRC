@@ -52,10 +52,29 @@ void Client::addToBuffer(std::string bufferTwo)
 }
 void Client::SetNick(int IsValide)
 {
-    _HasNick = IsValide;
+	_HasNick = IsValide;
 }
 
 int Client::GetNickClient()
 {
-    return _HasNick;
+	return _HasNick;
+}
+int Client::GetUserNameClient()
+{
+	return _UserName;
+}
+
+void Client::SetUserNameB(int IsValide)
+{
+	_UserName = IsValide;
+}
+
+int Client::GetValidClient()
+{
+	return _validClient;
+}
+
+void Client::SetValidClient(int IsValide)
+{
+	_validClient = IsValide;
 }

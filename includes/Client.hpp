@@ -23,6 +23,8 @@ private:
 	std::string _buffer;
 	bool _CheckPass;
 	bool _HasNick;
+	bool _UserName;
+	bool _validClient;
 
 public:
 	Client();							  // constructeur
@@ -35,12 +37,16 @@ public:
 	std::string getBuffer();
 	int GetPassClient();
 	int GetNickClient();
+	int GetUserNameClient();
+	int GetValidClient();
 	// SETTERR
 	void setNickname(std::string nickName);
 	void setUsername(std::string userName);
 	void setBuffer(std::string buffer);
 	void SetPass(int IsValide);
 	void SetNick(int IsValide);
+	void SetUserNameB(int IsValide);
+	void SetValidClient(int IsValide);
 	// UTIL
 	void addToBuffer(std::string bufferTwo);
 };
