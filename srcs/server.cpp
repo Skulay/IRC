@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/06 19:05:09 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/07 16:40:09 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,45 +142,113 @@ void Server::AcceptNewClient(int fd)
     std::cout << "Nouveau client accepté ! FD : " << NewFdClient << std::endl;
 }
 
-void Server::ParsBuffer(int fd)
-{
-    std::string buffer = _Client[fd].getBuffer();
-    size_t pos = buffer.find("\r\n");
-
-    while (pos != std::string::npos)
-    {
-        std::string command = buffer.substr(0, pos);
-
-        ExecuteCommand(command, fd);
-
-        buffer = buffer.substr(pos + 2);
-        _Client[fd].setBuffer(buffer);
-
-        pos = buffer.find("\r\n");
-    }
-}
-
-void Server::ExecuteCommand(std::string buffer, int fd)
+// this function split a buffer first string is
+// cmd second is argv
+void Server::SplitBuffer(std::string buffer, int fd)
 {
     std::string cmd;
     std::string argv;
 
     size_t pos = buffer.find(" ");
 
-    if (pos == std::string::npos) 
+    if (pos == std::string::npos)
     {
         cmd = buffer;
-        argv = ""; // Le reste est vide
+        argv = "";
     }
-    else 
+    else
     {
-        cmd = buffer.substr(0, pos); 
+        cmd = buffer.substr(0, pos);
         argv = buffer.substr(pos + 1);
     }
-
-    std::cout << "Client " << fd << " | Commande: [" << cmd << "] | Args: [" << argv << "]\n";
+    ExecuteCommand(fd, cmd, argv);
+    // std::cout << "Client " << fd << " | Commande: [" << cmd << "] | Args: [" << argv << "]\n";
 }
 
+void Server::ParsBuffer(int fd)
+{
+    std::string buffer = _Client[fd].getBuffer();
+
+    // std::cout << "DEBUG - Buffer brut recu : [" << buffer << "]" << std::endl;
+    // printf("je suis la dans parsbuffer\n");
+
+    size_t pos = buffer.find("\n");
+
+    while (pos != std::string::npos)
+    {
+        // printf("je suis dans la boucle while\n");
+
+        std::string command = buffer.substr(0, pos);
+
+        if (!command.empty() && command[command.length() - 1] == '\r')
+            buffer.erase(buffer.length() - 1, 1);
+
+        SplitBuffer(command, fd);
+
+        buffer = buffer.substr(pos + 1);
+        _Client[fd].setBuffer(buffer);
+
+        pos = buffer.find("\n");
+    }
+}
+
+void Server::ExecuteCommand(int fd, std::string Cmd, std::string Argv)
+{
+    if (Cmd == "PASS")
+    {
+        // printf("je suis dans le pass\n");
+        ExecutePass(fd, Argv);
+    }
+    else if (Cmd == "NICK")
+    {
+        ExecuteNick(fd, Argv);
+    }
+    else if (Cmd == "USER")
+    {
+    }
+    else if (Cmd == "JOIN")
+    {
+    }
+    else if (Cmd == "PRIVSMG")
+    {
+    }
+    else if (Cmd == "KICK")
+    {
+    }
+    else if (Cmd == "INVITE")
+    {
+    }
+    else if (Cmd == "TOPIC")
+    {
+    }
+    else if (Cmd == "MODE")
+    {
+    }
+    else
+        std::cerr << "this CMD" << Cmd << "is not available" << std::endl;
+}
+bool Server::IsValidNickName(std::string Argv, int fd)
+{
+    if (Argv.empty())
+    {
+        std::string ErrorEmpty = ":ircserv 431 * :No nickname given\r\n";
+        send(fd, ErrorEmpty.c_str(), ErrorEmpty.length(), 0);
+        return true;
+    }
+
+    std::map<int, Client>::iterator it;
+    for (it = _Client.begin(); it != _Client.end(); ++it)
+    {
+        if (it->second.getNickname() == Argv)
+        {
+            std::string ErrorUse = ":ircserv 433 * " + Argv + " :Nickname is already in use\r\n";
+            send(fd, ErrorUse.c_str(), ErrorUse.length(), 0);
+            return true;
+        }
+    }
+
+    return false;
+}
 Server::Server()
 {
 }

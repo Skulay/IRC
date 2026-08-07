@@ -7,7 +7,8 @@ INCDIR      = includes
 
 SRCS        = $(SRCDIR)/main.cpp \
               $(SRCDIR)/server.cpp \
-              $(SRCDIR)/Client.cpp
+              $(SRCDIR)/Client.cpp \
+			   $(SRCDIR)/ExecuteCmd.cpp
 
 OBJS        = $(SRCS:.cpp=.o)
 INCLUDES    = -I$(INCDIR)

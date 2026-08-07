@@ -37,15 +37,25 @@ Client::~Client() {}
 std::string Client::getNickname() { return _nickname; }
 std::string Client::getUsername() { return _username; }
 std::string Client::getBuffer() { return _buffer; }
+int Client::GetPassClient() { return _CheckPass; }
 
 // ---- Setters ----
 
 void Client::setNickname(std::string nickName) { _nickname = nickName; }
 void Client::setUsername(std::string userName) { _username = userName; }
 void Client::setBuffer(std::string buffer) { _buffer = buffer; }
-
+void Client::SetPass(int IsValide) { _CheckPass = IsValide; }
 // ---- Util ----
 void Client::addToBuffer(std::string bufferTwo)
 {
 	_buffer += bufferTwo;
+}
+
+void Client::SetNick(int IsValide)
+{
+	_HasNick = IsValide;
+}
+int Client::GetNickClient()
+{
+	return _HasNick;
 }

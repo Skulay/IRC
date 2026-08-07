@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/06 18:27:59 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/07 16:09:32 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 #include "Client.hpp"
 #include <algorithm>
 
+
+
 class Server
 {
 private:
@@ -48,7 +50,11 @@ public:
     void AcceptNewClient(int fd);
     void ReceiveFromClient(int fd);
     void ParsBuffer(int fd);
-    void ExecuteCommand(std::string buffer, int fd);
+    void SplitBuffer(std::string buffer, int fd);
+    void ExecuteCommand(int fd, std::string Cmd, std::string Argv);
+    void ExecutePass(int fd, std::string Argv);
+    void ExecuteNick(int fd, std::string Argv);
+    bool IsValidNickName(std::string Argv, int fd);
 };
 
 #endif
