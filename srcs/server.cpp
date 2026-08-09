@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/09 20:05:44 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/09 21:19:08 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 Server::Server() { InitCommands(); }
 
-// constructeur de copy ici
+// constructeur de copy ici a faire
 
-// operator= ici
+// operator= ici a faire
 
 Server::~Server() {}
 
