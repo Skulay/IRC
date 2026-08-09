@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/07 18:00:29 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/09 20:05:44 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+
+Server::Server() { InitCommands(); }
+
+// constructeur de copy ici
+
+// operator= ici
+
+Server::~Server() {}
+
 // check le port et la password
 bool Server::CheckAv(char **av)
 {
@@ -192,41 +201,53 @@ void Server::ParsBuffer(int fd)
     }
 }
 
+void Server::InitCommands(void)
+{
+    _commands["PASS"]    = &Server::ExecutePass;
+    _commands["NICK"]    = &Server::ExecuteNick;
+    _commands["USER"]    = &Server::ExecuteUser;
+    _commands["JOIN"]    = &Server::ExecuteJoin;
+    _commands["PRIVMSG"] = &Server::ExecutePrivmsg;
+    _commands["KICK"]    = &Server::ExecuteKick;
+    _commands["INVITE"]  = &Server::ExecuteInvite;
+    _commands["TOPIC"]   = &Server::ExecuteTopic;
+    _commands["MODE"]    = &Server::ExecuteMode;
+}
+
 void Server::ExecuteCommand(int fd, std::string Cmd, std::string Argv)
 {
-    if (Cmd == "PASS")
+    std::map<std::string, void (Server::*)(int, std::string)>::iterator it = _commands.find(Cmd);
+
+    if (it == _commands.end())
     {
-        ExecutePass(fd, Argv);
+        std::cerr << "this CMD " << Cmd << " is not available" << std::endl;
+        return;
     }
-    else if (Cmd == "NICK")
-    {
-        printf("ligne 203 fichier server.cpp\n");
-        ExecuteNick(fd, Argv);
-    }
-    else if (Cmd == "USER")
-    {
-        ExecuteUser(Argv, fd);
-    }
-    else if (Cmd == "JOIN")
-    {
-    }
-    else if (Cmd == "PRIVSMG")
-    {
-    }
-    else if (Cmd == "KICK")
-    {
-    }
-    else if (Cmd == "INVITE")
-    {
-    }
-    else if (Cmd == "TOPIC")
-    {
-    }
-    else if (Cmd == "MODE")
-    {
-    }
-    else
-        std::cerr << "this CMD" << Cmd << "is not available" << std::endl;
+    (this->*(it->second))(fd, Argv);
+}
+
+void Server::ExecuteJoin(int fd, std::string Argv) {
+
+}
+
+void Server::ExecutePrivmsg(int fd, std::string Argv) {
+
+}
+
+void Server::ExecuteKick(int fd, std::string Argv) {
+
+}
+
+void Server::ExecuteInvite(int fd, std::string Argv) {
+
+}
+
+void Server::ExecuteTopic(int fd, std::string Argv) {
+
+}
+
+void Server::ExecuteMode(int fd, std::string Argv) {
+
 }
 
 bool Server::IsValidNickName(std::string Argv, int fd)
@@ -250,11 +271,4 @@ bool Server::IsValidNickName(std::string Argv, int fd)
     }
 
     return false;
-}
-Server::Server()
-{
-}
-
-Server::~Server()
-{
 }
