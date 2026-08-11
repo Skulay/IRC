@@ -1,63 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ExecuteCmd.cpp                                     :+:      :+:    :+:   */
+/*   User.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/08/07 14:56:12 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/07 18:08:58 by amkhelif         ###   ########.fr       */
+/*   Created: 2026/08/10 15:48:23 by amkhelif          #+#    #+#             */
+/*   Updated: 2026/08/10 17:12:29 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Server.hpp"
+#include "../../includes/Server.hpp"
 
-void Server::ExecutePass(int fd, std::string Argv)
-{
-    printf("je suis dans pass\n");
-    if (Argv.empty())
-    {
-        std::string msg = ":ircserv 461 * PASS :Not enough parameters\r\n";
-        send(fd, msg.c_str(), msg.length(), 0);
-        return;
-    }
-    if (_Client[fd].GetPassClient()) // si le client a deja valide son mdp
-    {
-        std::string err = ":ircserv 462 * :You may not reregister\r\n";
-        send(fd, err.c_str(), err.length(), 0);
-        return;
-    }
-    if (this->_PassWord == Argv) // si le texte corspond au mdp du serveur c bon
-    {
-
-        _Client[fd].SetPass(true);
-    }
-    else // so le mdp nes pas celui du serveur
-    {
-        std::string msg = ":ircserv 464 * :Password incorrect\r\n";
-        send(fd, msg.c_str(), msg.length(), 0);
-    }
-}
-
-void Server::ExecuteNick(int fd, std::string Argv)
-{
-    printf("je suis dans ExecuteNick\n");
-    if (!_Client[fd].GetPassClient())
-    {
-        std::string msg = ":ircserv 462 * :Password invalide tu ne peut pas le faire";
-        send(fd, msg.c_str(), msg.length(), 0);
-        return;
-    }
-    else if (IsValidNickName(Argv, fd))
-        return;
-    else
-    {
-        _Client[fd].setNickname(Argv);
-        _Client[fd].SetNick(true);
-    }
-}
-
-void Server::ExecuteUser(std::string Argv, int fd)
+void Server::ExecuteUser(int fd, std::string Argv)
 {
     printf("je suis dans ExecuteUser\n");
     if (!_Client[fd].GetPassClient())
@@ -90,6 +45,18 @@ void Server::ExecuteUser(std::string Argv, int fd)
     _Client[fd].SetUserNameB(true);
     if (_Client[fd].GetPassClient() && _Client[fd].GetNickClient() && _Client[fd].GetUserNameClient())
     {
-        _Client[fd].SetValidClient(true);
+        _Client[fd].SetValidClient(fd, true);
     }
+}
+
+// pour irssi
+void Client::SetValidClient(int fd, int IsValide)
+{
+
+    std::string nick = getNickname();
+    std::string welcome = ":irc.local 001 " + nick + " :Welcome to the Internet Relay Chat network " + nick + "\r\n";
+    welcome += ":irc.local 002 " + nick + " :Your host is irc.local, running version 1.0\r\n";
+    welcome += ":irc.local 003 " + nick + " :This server was created just for 42\r\n";
+    welcome += ":irc.local 004 " + nick + " irc.local 1.0 o o\r\n";
+    send(fd, welcome.c_str(), welcome.length(), 0);
 }

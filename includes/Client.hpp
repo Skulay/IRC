@@ -32,13 +32,13 @@ public:
 	Client &operator=(const Client &src); // operator=
 	~Client();							  // destructeur
 	// GETTERR
-	std::string getNickname();
-	std::string getUsername();
-	std::string getBuffer();
-	int GetPassClient();
-	int GetNickClient();
-	int GetUserNameClient();
-	int GetValidClient();
+	std::string getNickname() const;
+	std::string getUsername() const;
+	std::string getBuffer() const;
+	int GetPassClient() const;
+	int GetNickClient() const;
+	int GetUserNameClient() const;
+	int GetValidClient() const;
 	// SETTERR
 	void setNickname(std::string nickName);
 	void setUsername(std::string userName);
@@ -46,10 +46,9 @@ public:
 	void SetPass(int IsValide);
 	void SetNick(int IsValide);
 	void SetUserNameB(int IsValide);
-	void SetValidClient(int IsValide);
+	void SetValidClient(int fd,int IsValide);
 	// UTIL
 	void addToBuffer(std::string bufferTwo);
 };
-
 
 #endif

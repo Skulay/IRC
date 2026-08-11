@@ -15,7 +15,8 @@
 
 #include <string>
 #include <vector>
-
+#include <map>
+#include "Client.hpp"
 class Channel
 {
 private:
@@ -72,8 +73,5 @@ public:
 	bool isFull() const;
 };
 
-void Channel::addMember(int fd, const Client& newClient) {
-    _members[fd] = newClient;
-}
 
 #endif
