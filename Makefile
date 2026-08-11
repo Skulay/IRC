@@ -18,6 +18,7 @@ SRCS        = $(SRCDIR)/main.cpp \
               $(SRCDIR)/command/Join.cpp \
               $(SRCDIR)/command/Ping.cpp \
               $(SRCDIR)/command/Mode.cpp \
+              $(SRCDIR)/command/Privmsg.cpp \
               $(SRCDIR)/server/poubelle.cpp
 			  
 OBJS        = $(SRCS:.cpp=.o)

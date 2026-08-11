@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:55:16 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/10 18:44:57 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/11 14:42:25 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void Server::SplitBuffer(std::string buffer, int fd)
         buffer.erase(0, pos + 1);
         size_t pos = buffer.find("\r");
         argv = buffer.substr(0, pos);
-        std::cout << "salut" << argv << std::endl;
+        // std::cout << "salut" << argv << std::endl;
         // argv.push_back('\0');
     }
     ExecuteCommand(fd, cmd, argv);
@@ -71,20 +71,10 @@ void Server::SplitBuffer(std::string buffer, int fd)
 
 void Server::ExecuteCommand(int fd, std::string Cmd, std::string Argv)
 {
-    // if (Cmd == "LS" && Argv == "302")
-    //     this->ExecuteCap(fd, Argv);
-    // std::cout << "je suis dans execute command ai recu " << Argv << Cmd << std::endl;
-    // printf("je suis dans execute command ai recu : %s\n", Argv);
 
     std::map<std::string, void (Server::*)(int, std::string)>::iterator it = _commands.find(Cmd);
-
-    // std::cout << Cmd.length() << "+" << Cmd << std::endl;
-    // for (int i = 0; Cmd[i]; i++)
-    // {
-    //     std::cout << (int)Cmd[i] << std::endl;
-    // }
-    // std::cout << (int)Cmd[3] << std::endl;
-    // // std::cout << (int)Cmd[4] << std::endl;
+    // std::cout << "je suis dans Execute Command " << std::endl;
+    // std::cout << Cmd << Argv << std::endl;
     if (it == _commands.end())
     {
         std::cerr << "this CMD " << Cmd << " is not available" << std::endl;

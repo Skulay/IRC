@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:48:23 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/10 17:12:29 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/11 14:43:36 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void Server::ExecuteUser(int fd, std::string Argv)
 {
-    printf("je suis dans ExecuteUser\n");
+    // printf("je suis dans ExecuteUser\n");
     if (!_Client[fd].GetPassClient())
     {
         std::string err = ":ircserv 464 * :Password required first\r\n";
