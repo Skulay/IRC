@@ -133,3 +133,7 @@ bool Channel::isFull() const
         return false;
     return _members.size() >= _userLimit;
 }
+
+const std::map<int, Client>& Channel::getMembers() const {
+    return _members;
+}

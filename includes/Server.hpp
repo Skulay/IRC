@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/10 19:14:04 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/11 15:17:35 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ private:
     void ExecuteJoin(int fd, std::string Argv);
     void ExecuteCap(int fd, std::string Argv);
     void ExecutePing(int fd, std::string Argv);
-    // void ExecuteMode(int fd, std::string Argv);
+    void SendMessage(int fd, std::string Argv);
+    void SendDestinataire(int fd, std::string Destination, std::string Msg);
     void ExecutePrivmsg(int fd, std::string Argv);
+    bool ClientValid(std::string name);
+    // void ExecuteMode(int fd, std::string Argv);
+    // void ExecutePrivmsg(int fd, std::string Argv);
     void ExecuteKick(int fd, std::string Argv);
     void ExecuteInvite(int fd, std::string Argv);
     void ExecuteTopic(int fd, std::string Argv);

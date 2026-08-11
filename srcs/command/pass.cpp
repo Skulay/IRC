@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:43:54 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/10 18:41:04 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/11 14:43:23 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void Server::ExecutePass(int fd, std::string Argv)
 {
     
-    printf("je suis dans pass\n");
+    // printf("je suis dans pass\n");
     if (Argv.empty())
     {
         std::string msg = ":ircserv 461 * PASS :Not enough parameters\r\n";
@@ -39,7 +39,7 @@ void Server::ExecutePass(int fd, std::string Argv)
     }
     else // so le mdp nes pas celui du serveur
     {
-        std::cout << "test\n";
+        // std::cout << "test\n";
         std::string msg = ":ircserv 464 * :Password incorrect\r\n";
         send(fd, msg.c_str(), msg.length(), 0);
     }

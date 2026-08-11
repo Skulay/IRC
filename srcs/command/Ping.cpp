@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 18:58:10 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/10 19:06:57 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/11 14:43:31 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void Server::ExecutePing(int fd, std::string Argv)
 {
-    std::cout << "je suis dans execute Ping " << std::endl;
+    // std::cout << "je suis dans execute Ping " << std::endl;
     // if (Argv.empty())
     // {
     //     std::string errMsg = ":irc.local 409 * :No origin specified\r\n";
