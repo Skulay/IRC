@@ -10,7 +10,7 @@
 // /*                                                                            */
 // /* ************************************************************************** */
 
-#include "Client.hpp"
+#include "../../includes/Client.hpp"
 
 Client::Client() : _nickname(""), _username(""), _buffer("") {}
 
@@ -34,10 +34,14 @@ Client::~Client() {}
 
 // ---- Getters ----
 
-std::string Client::getNickname() { return _nickname; }
-std::string Client::getUsername() { return _username; }
-std::string Client::getBuffer() { return _buffer; }
-int Client::GetPassClient() { return _CheckPass; }
+// ---- Getters ----
+std::string Client::getNickname() const { return _nickname; }
+std::string Client::getUsername() const { return _username; }
+std::string Client::getBuffer() const { return _buffer; }
+int Client::GetPassClient() const { return _CheckPass; }
+int Client::GetNickClient() const { return _HasNick; }
+int Client::GetUserNameClient() const { return _UserName; }
+int Client::GetValidClient() const { return _validClient; }
 
 // ---- Setters ----
 
@@ -55,26 +59,25 @@ void Client::SetNick(int IsValide)
 	_HasNick = IsValide;
 }
 
-int Client::GetNickClient()
-{
-	return _HasNick;
-}
-int Client::GetUserNameClient()
-{
-	return _UserName;
-}
+// int Client::GetNickClient()
+// {
+// 	return _HasNick;
+// }
+// int Client::GetUserNameClient()
+// {
+// 	return _UserName;
+// }
+// void Client::SetValidClient(int IsValide)
+// {
+// 	_validClient = IsValide;
+// }
 
 void Client::SetUserNameB(int IsValide)
 {
 	_UserName = IsValide;
 }
 
-int Client::GetValidClient()
-{
-	return _validClient;
-}
-
-void Client::SetValidClient(int IsValide)
-{
-	_validClient = IsValide;
-}
+// int Client::GetValidClient()
+// {
+// 	return _validClient;
+// }

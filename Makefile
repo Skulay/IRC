@@ -1,15 +1,25 @@
 NAME        = ircserv
 CXX         = c++
-CXXFLAGS    = -std=c++98
+CXXFLAGS    = -std=c++98 -g3
 
 SRCDIR      = srcs
 INCDIR      = includes
 
 SRCS        = $(SRCDIR)/main.cpp \
-              $(SRCDIR)/server.cpp \
-              $(SRCDIR)/Client.cpp \
-			   $(SRCDIR)/ExecuteCmd.cpp
-
+              $(SRCDIR)/server/server.cpp \
+              $(SRCDIR)/server/ServerNetwork.cpp \
+              $(SRCDIR)/server/ServerParser.cpp \
+              $(SRCDIR)/client/Client.cpp \
+              $(SRCDIR)/channel/Channel.cpp \
+              $(SRCDIR)/command/pass.cpp \
+              $(SRCDIR)/command/Nick.cpp \
+              $(SRCDIR)/command/User.cpp \
+			  $(SRCDIR)/command/Cap.cpp \
+              $(SRCDIR)/command/Join.cpp \
+              $(SRCDIR)/command/Ping.cpp \
+              $(SRCDIR)/command/Mode.cpp \
+              $(SRCDIR)/server/poubelle.cpp
+			  
 OBJS        = $(SRCS:.cpp=.o)
 INCLUDES    = -I$(INCDIR)
 
