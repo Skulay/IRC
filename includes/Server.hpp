@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 18:32:27 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 15:12:56 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ public:
     ~Server();
     bool CheckAv(char **av);
     bool isStringPrintable(const std::string &str);
+    bool IsOperator2(int fd, std::string name, std::string channel);
     void RunServer(void);
     bool LoopServer(void);
     void AcceptNewClient(int fd);
@@ -72,6 +73,12 @@ public:
     void ParsBuffer(int fd);
     void SplitBuffer(std::string buffer, int fd);
     void ExecuteCommand(int fd, std::string Cmd, std::string Argv);
+    bool CheckChannel(int fd, std::string channel);
+    bool CheckHasMenber(std::string name, std::string channel);
+    bool CheckCible(std::string name, std::string channel);
+    bool valideKick(int fd, std::string name, std::string channel);
+    void kickuser(int fd,std::string pseudo, std::string channel,std::string reason);
 };
+
 
 #endif

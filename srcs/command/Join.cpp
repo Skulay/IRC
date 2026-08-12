@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 18:55:43 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 14:42:58 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 14:27:18 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ void Server::ExecuteJoin(int fd, std::string Argv)
     _Channel.push_back(newSalon);
     std::string Welcome2 = ":" + _Client[fd].getNickname() + "!" + _Client[fd].getUsername() + "@localhost JOIN :" + Argv + "\r\n";
     // std::cout << "tu passe par la ou pas" << std::endl;
+    // _Client[fd].SetOperator(fd,1);
+    // for (std::vector<Channel>::iterator it = this->_Channel.begin(); it != this->_Channel.end(); ++it)
+    // {
+    //     if (it->getName() == Argv)
+    //     {
+    //         it->addOperator(Argv);
+    //         break;
+    //     }
+    // }
     send(fd, Welcome2.c_str(), Welcome2.length(), 0);
 }
 
@@ -59,7 +68,7 @@ void Server::SendMessage(int fd, std::string Argv)
                 send(new_fd, joinMsg.c_str(), joinMsg.length(), 0);
             }
             std::string nick = _Client[fd].getNickname();
-            
+
             std::string reply = ":irc.local 331 " + nick + " " + Argv + " :No topic is set\r\n";
             reply += ":irc.local 353 " + nick + " = " + Argv + " :" + AllUser + "\r\n";
             reply += ":irc.local 366 " + nick + " " + Argv + " :End of /NAMES list.\r\n";

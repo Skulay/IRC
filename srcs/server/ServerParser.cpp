@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:55:16 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 14:42:25 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 12:13:54 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void Server::ParsBuffer(int fd)
 
     // std::cout << "DEBUG - Buffer brut recu : [" << buffer << "]" << std::endl;
     // printf("je suis la dans parsbuffer\n");
-    if (buffer == "CAP LS")
-    {
-        std::cout << " jai recu cap ls" << std::endl;
-    }
+    // if (buffer == "CAP LS")
+    // {
+    //     std::cout << " jai recu cap ls" << std::endl;
+    // }
     size_t pos = buffer.find("\n");
 
     while (pos != std::string::npos)

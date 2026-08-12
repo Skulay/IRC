@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 14:09:01 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 18:54:46 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 12:06:46 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,39 @@ void Server::ExecutePrivmsg(int fd, std::string Argv)
     size_t space = Argv.find(' ');
     if (space == std::string::npos)
     {
-        // std::cerr << "commandes invalide" << std::endl;
+        std::string errMsg = ":irc.local 411 " + _Client[fd].getNickname() + " :No recipient given (PRIVMSG)\r\n";
+        send(fd, errMsg.c_str(), errMsg.length(), 0);
         return;
     }
     destination = Argv.substr(0, space);
 
     size_t pos = Argv.find(':');
-    if (pos == std::string::npos || pos + 1 == Argv.length())
+    if (pos != std::string::npos)
     {
-        // std::cerr << "commandes invalide" << std::endl;
-        return;
+        if (pos + 1 >= Argv.length())
+        {
+            std::string errMsg = ":irc.local 412 " + _Client[fd].getNickname() + " :No text to send\r\n";
+            send(fd, errMsg.c_str(), errMsg.length(), 0);
+            return;
+        }
+        phrase = Argv.substr(pos + 1);
     }
-    phrase = Argv.substr(pos + 1);
+    else
+    {
+        phrase = Argv.substr(space + 1);
+        if (phrase.empty())
+        {
+            std::string errMsg = ":irc.local 412 " + _Client[fd].getNickname() + " :No text to send\r\n";
+            send(fd, errMsg.c_str(), errMsg.length(), 0);
+            return;
+        }
+    }
 
     SendDestinataire(fd, destination, phrase);
 }
 
 void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
 {
-    // std::cout << "je suis dansla fonction senddestination" << std::endl;
 
     size_t pos = Destination.find("#");
     if (pos == std::string::npos)
@@ -48,11 +62,8 @@ void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
 
         for (it = _Client.begin(); it != _Client.end(); it++)
         {
-            // std::cout << "je cherche " + Destination << " je suis sur le " + it->second.getNickname() << std::endl;
-            // std::cout << "len de destination " + Destination.length() << " len du client actuelle " + it->second.getNickname().length() << std::endl;
             if (Destination == it->second.getNickname())
             {
-                // std::cout << "destinataire trouver" << std::endl;
                 fd_destination = it->first;
                 break;
             }
@@ -60,66 +71,52 @@ void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
 
         if (fd_destination != -1)
         {
-            // std::cout << "message emvoyer" << std::endl;
             std::string fullMsg = ":" + _Client[fd].getNickname() + " PRIVMSG " + Destination + " :" + Msg + "\r\n";
             send(fd_destination, fullMsg.c_str(), fullMsg.length(), 0);
         }
         else
         {
-            // std::cout << "destinataire pas trouber" << std::endl;
             std::string errMsg = ":irc.local 401 " + _Client[fd].getNickname() + " " + Destination + " :No such nick/channel\r\n";
             send(fd, errMsg.c_str(), errMsg.length(), 0);
         }
     }
     else
     {
-        // std::cout << "je suis dans le else de la fonctionsenddestination" << std::endl;
-        std::cout << "je cherche" + Destination << std::endl;
+        // std::cout << "je cherche" + Destination << std::endl;
         std::vector<Channel>::iterator it;
 
+        int find = -1;
         for (it = _Channel.begin(); it != _Channel.end(); ++it)
         {
-            // On accède aux membres de Channel avec l'opérateur ->
             std::cout << it->getName() << std::endl;
-
-            // Ou en déréférençant l'itérateur avec *
-            // (*it).nomDuCanal();
 
             if (it->getName() == Destination)
             {
+                find = 1;
                 std::string fullMsg = ":" + _Client[fd].getNickname() + " PRIVMSG " + Destination + " :" + Msg + "\r\n";
                 std::map<int, Client>::const_iterator it_member;
-
-                for (it_member = it->getMembers().begin(); it_member != it->getMembers().end(); ++it_member)
+                if (it->hasMember(_Client[fd].getNickname())) // on verifie si le client est menbre sinon
                 {
-                    if (it_member->first != fd)
+                    for (it_member = it->getMembers().begin(); it_member != it->getMembers().end(); ++it_member)
                     {
-                        send(it_member->first, fullMsg.c_str(), fullMsg.length(), 0);
+                        if (it_member->first != fd)
+                            send(it_member->first, fullMsg.c_str(), fullMsg.length(), 0);
                     }
                 }
+                else
+                {
+                    std::string errMsg = ":irc.local 404 " + _Client[fd].getNickname() + " " + Destination + " :Cannot send to channel\r\n";
+                    send(fd, errMsg.c_str(), errMsg.length(), 0);
+                }
+                break;
             }
         }
-        // channel
+        if (find == -1) // channel pas trouver
+        {
+            std::string errMsg = ":irc.local 401 " + _Client[fd].getNickname() + " " + Destination + " :No such nick/channel\r\n";
+            send(fd, errMsg.c_str(), errMsg.length(), 0);
+        }
     }
 }
 
-// bool Server::ClientValid(std::string name)
-// {
-//     std::cout << "je suis dans client valid" << "je checher  " + name << std::endl;
-//     // printf("je suis dans client valid\n");
-//     std::map<int, Client>::const_iterator it;
 
-//     for (it = _Client.begin(); it != _Client.end(); it++)
-//     {
-//         std::cout << "je suis dans la boucle de client valid" << std::endl;
-//         std::cout << "janalyse   le nom " + it->second.getUsername() << std::endl;
-//         if (name == it->second.getNickname())
-//         {
-//             std::cout << "je suis dans le if de client valid" << std::endl;
-
-//             return true;
-//         }
-//     }
-//     std::cout << "je ne trouve pas le nom" << std::endl;
-//     return false;
-// }

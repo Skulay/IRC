@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 14:13:01 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 12:17:23 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void Server::InitCommands(void)
     _commands["PING"] = &Server::ExecutePing;
     _commands["MODE"] = &Server::ExecuteMode;
     _commands["PRIVMSG"] = &Server::ExecutePrivmsg;
+    _commands["KICK"] = &Server::ExecuteKick;
     // _commands["PRIVMSG"] = &Server::ExecutePrivmsg;
-    // _commands["KICK"] = &Server::ExecuteKick;
     // _commands["INVITE"] = &Server::ExecuteInvite;
     // _commands["TOPIC"] = &Server::ExecuteTopic;
     // _commands["MODE"] = &Server::ExecuteMode;
