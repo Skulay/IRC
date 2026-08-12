@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 15:12:56 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 18:51:27 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,12 @@ public:
     bool CheckHasMenber(std::string name, std::string channel);
     bool CheckCible(std::string name, std::string channel);
     bool valideKick(int fd, std::string name, std::string channel);
-    void kickuser(int fd,std::string pseudo, std::string channel,std::string reason);
+    void kickuser(int fd, std::string pseudo, std::string channel, std::string reason);
+    bool ValideInvite(int fd, std::string cible, std::string channel);
+    bool CheckClientExists(const std::string &nickname);
+    Channel *getChannelByName(const std::string &name);
+    int getFdByNickname(const std::string &nickname);
+    bool CheckTopicValid(int fd, std::string cible);
 };
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 14:30:57 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 14:49:52 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 17:06:10 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,26 @@ bool Server::IsOperator2(int fd, std::string name, std::string channel)
         }
     }
     return (false);
+}
+
+bool Server::CheckClientExists(const std::string &nickname)
+{
+    std::map<int, Client>::const_iterator it;
+    for (it = _Client.begin(); it != _Client.end(); ++it)
+    {
+        if (it->second.getNickname() == nickname)
+            return true;
+    }
+    return false;
+}
+
+int Server::getFdByNickname(const std::string &nickname)
+{
+    std::map<int, Client>::const_iterator it;
+    for (it = _Client.begin(); it != _Client.end(); ++it)
+    {
+        if (it->second.getNickname() == nickname)
+            return it->first;
+    }
+    return -1;
 }

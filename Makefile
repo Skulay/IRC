@@ -21,6 +21,8 @@ SRCS        = $(SRCDIR)/main.cpp \
               $(SRCDIR)/command/Privmsg.cpp \
               $(SRCDIR)/command/Kick.cpp \
               $(SRCDIR)/server/UtilsServer.cpp\
+              $(SRCDIR)/command/Invite.cpp\
+              $(SRCDIR)/command/Topic.cpp\
               $(SRCDIR)/server/poubelle.cpp
 			  
 OBJS        = $(SRCS:.cpp=.o)

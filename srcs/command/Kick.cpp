@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 12:12:58 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 15:25:43 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 15:38:50 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,19 @@ bool Server::valideKick(int fd, std::string name, std::string channel)
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    else if (!CheckHasMenber(userNick, channel)) // Vérifie si l'expéditeur est sur le channel
+    else if (!CheckHasMenber(userNick, channel)) 
     {
         std::string errMsg = ":irc.local 442 " + userNick + " " + channel + " :You're not on that channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    else if (!IsOperator2(fd, userNick, channel)) // Vérifie si l'expéditeur a les droits OP
+    else if (!IsOperator2(fd, userNick, channel)) 
     {
         std::string errMsg = ":irc.local 482 " + userNick + " " + channel + " :You're not channel operator\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    else if (!CheckCible(name, channel)) // 3. Remplacement de pseudo par name (la cible)
+    else if (!CheckCible(name, channel)) 
     {
         std::string errMsg = ":irc.local 441 " + userNick + " " + name + " " + channel + " :They aren't on that channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
