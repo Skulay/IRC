@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 18:32:27 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/12 13:23:43 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ private:
     void ExecuteInvite(int fd, std::string Argv);
     void ExecuteTopic(int fd, std::string Argv);
     void ExecuteMode(int fd, std::string Argv);
+
+    //BOT
+    void CheckBot(int fd, std::string Destination, std::string Msg);
+    std::string BuildBotReply(const std::string &msg);
 
 public:
     Server();
