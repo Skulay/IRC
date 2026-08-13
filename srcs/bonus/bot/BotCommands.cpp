@@ -12,6 +12,9 @@
 
 #include "../../../includes/Server.hpp"
 
+// vu qu'on parse pas la ligne je peux enlever arg des argument sauf si on fait une commande avec un besoin de parse
+// ex: /dice 100 <- pour avoir un resultat sur 100 au lieux de 6
+
 std::string Server::BotPing(const std::string &arg)
 {
     (void)arg;
