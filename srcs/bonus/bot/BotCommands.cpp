@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../../includes/Server.hpp"
+
 std::string Server::BotPing(const std::string &arg)
 {
     (void)arg;

@@ -19,7 +19,9 @@ SRCS        = $(SRCDIR)/main.cpp \
               $(SRCDIR)/command/Ping.cpp \
               $(SRCDIR)/command/Mode.cpp \
               $(SRCDIR)/command/Privmsg.cpp \
-              $(SRCDIR)/server/poubelle.cpp
+              $(SRCDIR)/server/poubelle.cpp \
+              $(SRCDIR)/bonus/bot/bot.cpp \
+              $(SRCDIR)/bonus/bot/BotCommands.cpp
 			  
 OBJS        = $(SRCS:.cpp=.o)
 INCLUDES    = -I$(INCDIR)
