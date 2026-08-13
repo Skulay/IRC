@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 13:23:43 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/12 21:38:44 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,20 @@ private:
     void ExecuteMode(int fd, std::string Argv);
 
     //BOT
+    typedef std::string (Server::*BotCmd)(const std::string &arg);
+    std::map<std::string, BotCmd> _botCommands;
+
+    void InitBotCommands(void);
     void CheckBot(int fd, std::string Destination, std::string Msg);
     std::string BuildBotReply(const std::string &msg);
+
+    // fonction commande du bot
+    std::string BotPing(const std::string &arg);
+    std::string BotDice(const std::string &arg);
+    std::string BotCoin(const std::string &arg);
+    std::string BotAscii(const std::string &arg);
+    std::string Botfacts(const std::string &arg);
+    std::string BotUsers(const std::string &arg);
 
 public:
     Server();

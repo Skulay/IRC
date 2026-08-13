@@ -28,23 +28,28 @@
 //	 -> ping (repond pong mdr)
 //	 -> 
 
-void CheckBot(int fd, std::string Destination, std::string Msg)
+void Server::CheckBot(int fd, std::string Destination, std::string Msg)
 {
-	if (Destination.find('#') != std::string::npos)
-		return;
+    if (Destination != "BOT")
+        return;
 
-	std::string trigger = "BOT";
-	size_t start = Msg.find_first_not_of(" ");
+    std::string reply = BuildBotReply(Msg);
 
-	if (start == std::string::npos)
-   		return;
-
-	std::string trim = Msg.substr(start);
-
+    std::string fullMsg = ":BOT!bot@localhost PRIVMSG " + Destination + " :" + reply + "\r\n";
+    send(fd, fullMsg.c_str(), fullMsg.length(), 0);
 }
 
-std::string BuildBotReply(const std::string &msg)
+std::string Server::BuildBotReply(const std::string &msg)
 {
+    size_t space = msg.find(' ');
+    std::string cmd = (space == std::string::npos) ? msg : msg.substr(0, space);
+    std::string arg = (space == std::string::npos) ? "" : msg.substr(space + 1);
+
+    std::map<std::string, BotCmd>::iterator it = _botCommands.find(cmd);
+    if (it == _botCommands.end())
+        return "Unknow command: Type help";
+
+    return (this->*(it->second))(arg);
 
 }
 
