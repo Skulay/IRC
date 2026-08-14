@@ -12,7 +12,8 @@
 
 #include "../../includes/Client.hpp"
 
-Client::Client() : _nickname(""), _username(""), _buffer("") {}
+Client::Client() : _nickname(""), _username(""), _buffer(""),
+    _CheckPass(false), _HasNick(false), _UserName(false), _validClient(false) {}
 
 Client::Client(const Client &src)
 {
