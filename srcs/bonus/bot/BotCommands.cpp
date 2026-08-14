@@ -47,3 +47,15 @@ std::string Server::BotUsers() {
        << " user" << (_Client.size() > 1 ? "s" : "") << " connected.";
     return ss.str();
 }
+
+std::string Server::BotHelp() {
+    std::string help;
+    help += "Available commands: ";
+    help += "ping (pong reply), ";
+    help += "dice (roll a number 1-6), ";
+    help += "coin (flip heads or tails), ";
+    help += "fact (random tech fact), ";
+    help += "users (number of connected users), ";
+    help += "help (show this message)";
+    return help;
+}

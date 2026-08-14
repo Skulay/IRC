@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/14 17:38:37 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/14 17:44:57 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ private:
     std::string BotCoin();
     std::string Botfacts();
     std::string BotUsers();
+    std::string BotHelp();
 
 public:
     Server();
