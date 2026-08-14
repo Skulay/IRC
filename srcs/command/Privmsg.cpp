@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 14:09:01 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 18:54:46 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/14 17:21:28 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ void Server::ExecutePrivmsg(int fd, std::string Argv)
         return;
     }
     phrase = Argv.substr(pos + 1);
-
-    SendDestinataire(fd, destination, phrase);
+    
+    if (destination == "BOT")
+        CheckBot(fd, destination, phrase);
+    else
+        SendDestinataire(fd, destination, phrase);
 }
 
 void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)

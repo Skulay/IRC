@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 14:13:01 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/14 17:44:16 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
-Server::Server() { InitCommands(); }
+Server::Server() {
+    InitCommands(); 
+    InitBotCommands();
+}
 
 // constructeur de copy ici a faire
 
@@ -64,6 +67,16 @@ void Server::InitCommands(void)
     // _commands["INVITE"] = &Server::ExecuteInvite;
     // _commands["TOPIC"] = &Server::ExecuteTopic;
     // _commands["MODE"] = &Server::ExecuteMode;
+}
+
+void Server::InitBotCommands(void)
+{
+    _botCommands["ping"]  = &Server::BotPing;
+    _botCommands["dice"]  = &Server::BotDice;
+    _botCommands["coin"]  = &Server::BotCoin;
+    _botCommands["fact"]  = &Server::Botfacts;
+    _botCommands["users"] = &Server::BotUsers;
+    _botCommands["help"]  = &Server::BotHelp;
 }
 
 
