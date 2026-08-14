@@ -33,8 +33,6 @@ Client &Client::operator=(const Client &src)
 Client::~Client() {}
 
 // ---- Getters ----
-
-// ---- Getters ----
 std::string Client::getNickname() const { return _nickname; }
 std::string Client::getUsername() const { return _username; }
 std::string Client::getBuffer() const { return _buffer; }

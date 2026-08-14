@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 21:38:44 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/14 17:33:32 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ private:
     struct epoll_event events[10];
     std::map<int, Client> _Client;
     std::vector<Channel> _Channel; // tableau de channel
-    std::map<std::string, void (Server::*)(int, std::string)> _commands;
+    std::map<std::string, void (Server::*)(int)> _commands;
 
     void InitCommands(void);
     void ExecutePass(int fd, std::string Argv);
@@ -69,12 +69,11 @@ private:
     std::string BuildBotReply(const std::string &msg);
 
     // fonction commande du bot
-    std::string BotPing(const std::string &arg);
-    std::string BotDice(const std::string &arg);
-    std::string BotCoin(const std::string &arg);
-    std::string BotAscii(const std::string &arg);
-    std::string Botfacts(const std::string &arg);
-    std::string BotUsers(const std::string &arg);
+    std::string BotPing();
+    std::string BotDice();
+    std::string BotCoin();
+    std::string Botfacts();
+    std::string BotUsers();
 
 public:
     Server();

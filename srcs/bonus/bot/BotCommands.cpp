@@ -15,29 +15,21 @@
 // vu qu'on parse pas la ligne je peux enlever arg des argument sauf si on fait une commande avec un besoin de parse
 // ex: /dice 100 <- pour avoir un resultat sur 100 au lieux de 6
 
-std::string Server::BotPing(const std::string &arg)
-{
-    (void)arg;
+std::string Server::BotPing() {
     return "pong !";
 }
 
-std::string Server::BotDice(const std::string &arg)
-{
-    (void)arg;
+std::string Server::BotDice() {
     std::stringstream ss;
     ss << "You rolled a " << (rand() % 6 + 1) << " !";
     return ss.str();
 }
 
-std::string Server::BotCoin(const std::string &arg)
-{
-    (void)arg;
+std::string Server::BotCoin() {
     return (rand() % 2 == 0) ? "Heads !" : "Tails !";
 }
 
-std::string Server::Botfacts(const std::string &arg)
-{
-    (void)arg;
+std::string Server::Botfacts() {
     std::vector<std::string> facts;
     facts.push_back("Google's first server was made with LEGO.");
     facts.push_back("RollerCoaster Tycoon was mostly written in Assembly.");
@@ -52,17 +44,9 @@ std::string Server::Botfacts(const std::string &arg)
     return facts[rand() % facts.size()];
 }
 
-std::string Server::BotUsers(const std::string &arg)
-{
-    (void)arg;
+std::string Server::BotUsers() {
     std::stringstream ss;
     ss << "There " << (_Client.size() > 1 ? "are " : "is ") << _Client.size()
        << " user" << (_Client.size() > 1 ? "s" : "") << " connected.";
     return ss.str();
-}
-
-std::string Server::BotAscii(const std::string &arg)
-{
-    (void)arg;
-    return "( o.o )\r\n > ^ <";
 }

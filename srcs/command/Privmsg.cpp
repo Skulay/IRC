@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 14:09:01 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/13 14:03:25 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/14 17:21:28 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,11 @@ void Server::ExecutePrivmsg(int fd, std::string Argv)
         return;
     }
     phrase = Argv.substr(pos + 1);
-
-    SendDestinataire(fd, destination, phrase);
-    CheckBot(fd, destination, phrase);
+    
+    if (destination == "BOT")
+        CheckBot(fd, destination, phrase);
+    else
+        SendDestinataire(fd, destination, phrase);
 }
 
 void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
