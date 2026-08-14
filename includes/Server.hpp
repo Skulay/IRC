@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/14 17:33:32 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/14 17:38:37 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ private:
     struct epoll_event events[10];
     std::map<int, Client> _Client;
     std::vector<Channel> _Channel; // tableau de channel
-    std::map<std::string, void (Server::*)(int)> _commands;
+    std::map<std::string, void (Server::*)(int, std::string)> _commands;
 
     void InitCommands(void);
     void ExecutePass(int fd, std::string Argv);
@@ -61,14 +61,13 @@ private:
     void ExecuteMode(int fd, std::string Argv);
 
     //BOT
-    typedef std::string (Server::*BotCmd)(const std::string &arg);
+    typedef std::string (Server::*BotCmd)();
     std::map<std::string, BotCmd> _botCommands;
 
     void InitBotCommands(void);
     void CheckBot(int fd, std::string Destination, std::string Msg);
     std::string BuildBotReply(const std::string &msg);
 
-    // fonction commande du bot
     std::string BotPing();
     std::string BotDice();
     std::string BotCoin();

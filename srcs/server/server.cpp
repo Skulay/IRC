@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 21:39:26 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/14 17:37:31 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void Server::InitBotCommands(void)
     _botCommands["ping"]  = &Server::BotPing;
     _botCommands["dice"]  = &Server::BotDice;
     _botCommands["coin"]  = &Server::BotCoin;
-    _botCommands["ascii"] = &Server::BotAscii;
     _botCommands["fact"]  = &Server::Botfacts;
     _botCommands["users"] = &Server::BotUsers;
 }

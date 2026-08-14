@@ -12,27 +12,22 @@
 
 #include "../../../includes/Server.hpp"
 
-void Server::CheckBot(int fd, std::string Destination, std::string Msg)
-{
+void Server::CheckBot(int fd, std::string Destination, std::string Msg) {
     if (Destination != "BOT")
         return;
 
     std::string reply = BuildBotReply(Msg);
-
     std::string fullMsg = ":BOT!bot@localhost PRIVMSG " + Destination + " :" + reply + "\r\n";
     send(fd, fullMsg.c_str(), fullMsg.length(), 0);
 }
 
-std::string Server::BuildBotReply(const std::string &msg)
-{
+std::string Server::BuildBotReply(const std::string &msg) {
     size_t space = msg.find(' ');
     std::string cmd = (space == std::string::npos) ? msg : msg.substr(0, space);
-
     std::map<std::string, BotCmd>::iterator it = _botCommands.find(cmd);
+
     if (it == _botCommands.end())
         return "Unknow command: Type help";
-
-    return (this->*(it->second));
-
+    return (this->*(it->second))();
 }
 
