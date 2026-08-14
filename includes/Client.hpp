@@ -31,6 +31,7 @@ public:
 	Client(const Client &src);			  // constructeur de copy
 	Client &operator=(const Client &src); // operator=
 	~Client();							  // destructeur
+
 	// GETTERR
 	std::string getNickname() const;
 	std::string getUsername() const;
@@ -39,6 +40,7 @@ public:
 	int GetNickClient() const;
 	int GetUserNameClient() const;
 	int GetValidClient() const;
+
 	// SETTERR
 	void setNickname(std::string nickName);
 	void setUsername(std::string userName);
@@ -47,6 +49,7 @@ public:
 	void SetNick(int IsValide);
 	void SetUserNameB(int IsValide);
 	void SetValidClient(int fd,int IsValide);
+	
 	// UTIL
 	void addToBuffer(std::string bufferTwo);
 };

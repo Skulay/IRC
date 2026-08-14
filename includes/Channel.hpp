@@ -44,7 +44,8 @@ public:
 	bool isInviteOnly() const;
 	bool isTopicRestricted() const;
 	size_t getUserLimit() const;
-const std::map<int, Client>& getMembers() const;
+	const std::map<int, Client>& getMembers() const;
+	
 	// Setters
 	void setTopic(const std::string &topic);
 	void setKey(const std::string &key);

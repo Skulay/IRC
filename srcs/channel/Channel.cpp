@@ -17,13 +17,9 @@ Channel::Channel() : _name(""), _topic(""), _key(""), _inviteOnly(false), _topic
 
 Channel::Channel(const std::string &name) : _name(name), _topic(""), _key(""), _inviteOnly(false), _topicRestricted(false), _userLimit(0) {}
 
-Channel::Channel(const Channel &src)
-{
-    *this = src;
-}
+Channel::Channel(const Channel &src) { *this = src; }
 
-Channel &Channel::operator=(const Channel &src)
-{
+Channel &Channel::operator=(const Channel &src) {
     if (this != &src)
     {
         _name = src._name;
@@ -56,13 +52,11 @@ void Channel::setUserLimit(size_t limit) { _userLimit = limit; }
 void Channel::removeKey() { _key = ""; }
 void Channel::removeUserLimit() { _userLimit = 0; }
 
-void Channel::addMember(int fd, const Client& newClient)
-{
+void Channel::addMember(int fd, const Client& newClient) {
     _members[fd] = newClient;
 }
 
-void Channel::removeMember(const std::string &nickname)
-{
+void Channel::removeMember(const std::string &nickname) {
     for (std::map<int, Client>::iterator it = _members.begin(); it != _members.end(); ++it)
     {
         if (it->second.getNickname() == nickname)
@@ -73,8 +67,7 @@ void Channel::removeMember(const std::string &nickname)
     }
 }
 
-bool Channel::hasMember(const std::string &nickname) const
-{
+bool Channel::hasMember(const std::string &nickname) const {
     for (std::map<int, Client>::const_iterator it = _members.begin(); it != _members.end(); ++it)
     {
         if (it->second.getNickname() == nickname)
@@ -83,14 +76,12 @@ bool Channel::hasMember(const std::string &nickname) const
     return false;
 }
 
-void Channel::addOperator(const std::string &nickname)
-{
+void Channel::addOperator(const std::string &nickname) {
     if (!isOperator(nickname))
         _operators.push_back(nickname);
 }
 
-void Channel::removeOperator(const std::string &nickname)
-{
+void Channel::removeOperator(const std::string &nickname) {
     for (std::vector<std::string>::iterator it = _operators.begin(); it != _operators.end(); ++it)
     {
         if (*it == nickname)
@@ -101,8 +92,7 @@ void Channel::removeOperator(const std::string &nickname)
     }
 }
 
-bool Channel::isOperator(const std::string &nickname) const
-{
+bool Channel::isOperator(const std::string &nickname) const {
     for (std::vector<std::string>::const_iterator it = _operators.begin(); it != _operators.end(); ++it)
     {
         if (*it == nickname)
@@ -111,14 +101,12 @@ bool Channel::isOperator(const std::string &nickname) const
     return false;
 }
 
-void Channel::addInvited(const std::string &nickname)
-{
+void Channel::addInvited(const std::string &nickname) {
     if (!isInvited(nickname))
         _invited.push_back(nickname);
 }
 
-bool Channel::isInvited(const std::string &nickname) const
-{
+bool Channel::isInvited(const std::string &nickname) const {
     for (std::vector<std::string>::const_iterator it = _invited.begin(); it != _invited.end(); ++it)
     {
         if (*it == nickname)
@@ -127,8 +115,7 @@ bool Channel::isInvited(const std::string &nickname) const
     return false;
 }
 
-bool Channel::isFull() const
-{
+bool Channel::isFull() const {
     if (_userLimit == 0)
         return false;
     return _members.size() >= _userLimit;
