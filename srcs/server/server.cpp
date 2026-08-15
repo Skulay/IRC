@@ -3,20 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/08/15 16:17:24 by amkhelif         ###   ########.fr       */
+=======
+/*   Updated: 2026/08/14 17:44:16 by alehamad         ###   ########.fr       */
+>>>>>>> origin/master
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+<<<<<<< HEAD
 Server::Server() { InitCommands(); }
 // Server::Server(const Server &src)
 // {
 //     *this = src;
 // }
+=======
+Server::Server() {
+    InitCommands(); 
+    InitBotCommands();
+}
+>>>>>>> origin/master
 
 // Server &Server::operator=(const Server &src)
 // {
@@ -79,3 +90,18 @@ void Server::InitCommands(void)
     _commands["QUIT"] = &Server::ExecuteQuit;
     _commamds["PART"] = Server::ExecutePart;
 }
+<<<<<<< HEAD
+=======
+
+void Server::InitBotCommands(void)
+{
+    _botCommands["ping"]  = &Server::BotPing;
+    _botCommands["dice"]  = &Server::BotDice;
+    _botCommands["coin"]  = &Server::BotCoin;
+    _botCommands["fact"]  = &Server::Botfacts;
+    _botCommands["users"] = &Server::BotUsers;
+    _botCommands["help"]  = &Server::BotHelp;
+}
+
+
+>>>>>>> origin/master

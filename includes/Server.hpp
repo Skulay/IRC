@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2026/08/15 16:20:47 by amkhelif         ###   ########.fr       */
+=======
+/*   Updated: 2026/08/14 17:44:57 by alehamad         ###   ########.fr       */
+>>>>>>> origin/master
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +64,21 @@ private:
     void ExecuteMode(int fd, std::string Argv);
     void ExecuteQuit(int fd, std::string Argv);
     void ExecutePart(int fd, std::string Argv);
+
+    //BOT
+    typedef std::string (Server::*BotCmd)();
+    std::map<std::string, BotCmd> _botCommands;
+
+    void InitBotCommands(void);
+    void CheckBot(int fd, std::string Destination, std::string Msg);
+    std::string BuildBotReply(const std::string &msg);
+
+    std::string BotPing();
+    std::string BotDice();
+    std::string BotCoin();
+    std::string Botfacts();
+    std::string BotUsers();
+    std::string BotHelp();
 
 public:
     Server();

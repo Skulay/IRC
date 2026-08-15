@@ -20,11 +20,12 @@ SRCS        = $(SRCDIR)/main.cpp \
               $(SRCDIR)/command/Mode.cpp \
               $(SRCDIR)/command/Privmsg.cpp \
               $(SRCDIR)/command/Kick.cpp \
-              $(SRCDIR)/server/UtilsServer.cpp\
-              $(SRCDIR)/command/Invite.cpp\
-              $(SRCDIR)/command/Quit.cpp\
-              $(SRCDIR)/command/Topic.cpp\
-              $(SRCDIR)/server/poubelle.cpp
+              $(SRCDIR)/command/Invite.cpp \
+              $(SRCDIR)/command/Quit.cpp \
+              $(SRCDIR)/command/Topic.cpp \
+              $(SRCDIR)/server/poubelle.cpp \
+              $(SRCDIR)/bonus/bot/bot.cpp \
+              $(SRCDIR)/bonus/bot/BotCommands.cpp
 			  
 OBJS        = $(SRCS:.cpp=.o)
 INCLUDES    = -I$(INCDIR)
