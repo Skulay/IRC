@@ -25,6 +25,7 @@ private:
 	bool _HasNick;
 	bool _UserName;
 	bool _validClient;
+	bool _operator;
 
 public:
 	Client();							  // constructeur
@@ -40,7 +41,11 @@ public:
 	int GetNickClient() const;
 	int GetUserNameClient() const;
 	int GetValidClient() const;
+<<<<<<< HEAD
+	int GetOperator() const;
+=======
 
+>>>>>>> origin/master
 	// SETTERR
 	void setNickname(std::string nickName);
 	void setUsername(std::string userName);
@@ -48,10 +53,16 @@ public:
 	void SetPass(int IsValide);
 	void SetNick(int IsValide);
 	void SetUserNameB(int IsValide);
+<<<<<<< HEAD
+	void SetValidClient(int fd, int IsValide);
+	void SetOperator(int fd, int Isvalide);
+=======
 	void SetValidClient(int fd,int IsValide);
 	
+>>>>>>> origin/master
 	// UTIL
 	void addToBuffer(std::string bufferTwo);
 };
+
 
 #endif

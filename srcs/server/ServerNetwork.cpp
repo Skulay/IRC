@@ -6,12 +6,11 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:54:12 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/10 16:03:46 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 16:09:36 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
-
 
 void Server::RunServer()
 {
@@ -57,8 +56,6 @@ void Server::RunServer()
     LoopServer();
 }
 
-
-
 bool Server::LoopServer()
 {
     while (true)
@@ -75,8 +72,6 @@ bool Server::LoopServer()
         }
     }
 }
-
-
 
 // fonction qui acppre kes new clients
 void Server::AcceptNewClient(int fd)
@@ -98,27 +93,51 @@ void Server::AcceptNewClient(int fd)
     std::cout << "Nouveau client accepté ! FD : " << NewFdClient << std::endl;
 }
 
-
 void Server::ReceiveFromClient(int fd)
 {
     char Receive[1024];
     int SizeMax = sizeof(Receive) - 1;
 
-    
     ssize_t DataClient = recv(fd, Receive, SizeMax, 0);
     if (DataClient > 0)
     {
         Receive[DataClient] = '\0';
         _Client[fd].addToBuffer(Receive);
-        // std::string test = _Client[fd].getBuffer();
-        // printf("%s\n", test);
         std::cout << "Données reçues : " << Receive << std::endl;
         ParsBuffer(fd);
     }
     else if (DataClient == 0)
-        std::cout << "Connexion fermée par le serveur." << std::endl;
+        DisconnectClient(fd,"");
     else
-        std::cerr << "Erreur lors de la réception." << std::endl;
+        DisconnectClient(fd,"");
 }
 
+void Server::DisconnectClient(int fd , std::string reason)
+{
+    std::map<int, Client>::iterator itClient = _Client.find(fd);
+    if (itClient == _Client.end())
+        return;
 
+    std::string nick = itClient->second.getNickname();
+    std::string user = itClient->second.getUsername();
+    std::string quitMsg = ":" + nick + "!" + user + "@localhost QUIT :" + reason + "\r\n";
+    for (std::vector<Channel>::iterator it = _Channel.begin(); it != _Channel.end(); ++it)
+    {
+        if (it->hasMember(nick))
+        {
+            const std::map<int, Client> &members = it->getMembers();
+            for (std::map<int, Client>::const_iterator it_mem = members.begin(); it_mem != members.end(); ++it_mem)
+            {
+                if (it_mem->first != fd)
+                    send(it_mem->first, quitMsg.c_str(), quitMsg.length(), 0);
+            }
+            it->removeMember(nick);
+        }
+    }
+
+    epoll_ctl(this->_EpollFD, EPOLL_CTL_DEL, fd, NULL);
+
+    close(fd);
+
+    _Client.erase(itClient);
+}

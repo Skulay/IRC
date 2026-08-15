@@ -80,3 +80,15 @@ void Client::SetUserNameB(int IsValide)
 // {
 // 	return _validClient;
 // }
+
+void Client::SetOperator(int fd, int Isvalide)
+{
+	(void)fd;
+
+	_operator = Isvalide;
+}
+
+int Client::GetOperator() const
+{
+	return (_operator);
+}

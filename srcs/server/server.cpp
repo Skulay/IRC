@@ -6,20 +6,42 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2026/08/15 16:17:24 by amkhelif         ###   ########.fr       */
+=======
 /*   Updated: 2026/08/14 17:44:16 by alehamad         ###   ########.fr       */
+>>>>>>> origin/master
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+<<<<<<< HEAD
+Server::Server() { InitCommands(); }
+// Server::Server(const Server &src)
+// {
+//     *this = src;
+// }
+=======
 Server::Server() {
     InitCommands(); 
     InitBotCommands();
 }
+>>>>>>> origin/master
 
-// constructeur de copy ici a faire
-
-// operator= ici a faire (plus tarddddd mdr jai la flemme la)
+// Server &Server::operator=(const Server &src)
+// {
+//     if (this != &src)
+//     {
+//         this->_port = src._port;
+//         this->_password = src._password;
+//         this->_serverSocket = src._serverSocket;
+//         this->_Client = src._Client;
+//         this->_Channel = src._Channel;
+//         this->_pollFds = src._pollFds;
+//     }
+//     return *this;
+// }
 
 Server::~Server() {}
 
@@ -62,12 +84,14 @@ void Server::InitCommands(void)
     _commands["PING"] = &Server::ExecutePing;
     _commands["MODE"] = &Server::ExecuteMode;
     _commands["PRIVMSG"] = &Server::ExecutePrivmsg;
-    // _commands["PRIVMSG"] = &Server::ExecutePrivmsg;
-    // _commands["KICK"] = &Server::ExecuteKick;
-    // _commands["INVITE"] = &Server::ExecuteInvite;
-    // _commands["TOPIC"] = &Server::ExecuteTopic;
-    // _commands["MODE"] = &Server::ExecuteMode;
+    _commands["KICK"] = &Server::ExecuteKick;
+    _commands["INVITE"] = &Server::ExecuteInvite;
+    _commands["TOPIC"] = &Server::ExecuteTopic;
+    _commands["QUIT"] = &Server::ExecuteQuit;
+    _commamds["PART"] = Server::ExecutePart;
 }
+<<<<<<< HEAD
+=======
 
 void Server::InitBotCommands(void)
 {
@@ -80,3 +104,4 @@ void Server::InitBotCommands(void)
 }
 
 
+>>>>>>> origin/master

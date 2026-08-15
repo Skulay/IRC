@@ -28,6 +28,7 @@ private:
 	std::vector<std::string> _invited;
 	bool _inviteOnly;
 	bool _topicRestricted;
+	bool _hasLimit;
 	size_t _userLimit;
 
 public:
@@ -44,8 +45,12 @@ public:
 	bool isInviteOnly() const;
 	bool isTopicRestricted() const;
 	size_t getUserLimit() const;
+<<<<<<< HEAD
+	const std::map<int, Client> &getMembers() const;
+=======
 	const std::map<int, Client>& getMembers() const;
 	
+>>>>>>> origin/master
 	// Setters
 	void setTopic(const std::string &topic);
 	void setKey(const std::string &key);
@@ -56,7 +61,7 @@ public:
 	void removeUserLimit();
 
 	// membre
-	void addMember(int fd, const Client& newClient);
+	void addMember(int fd, const Client &newClient);
 	// void addMember(const std::string &nickname);
 	void removeMember(const std::string &nickname);
 	bool hasMember(const std::string &nickname) const;
@@ -73,6 +78,5 @@ public:
 	// isFull solo dans son coin
 	bool isFull() const;
 };
-
 
 #endif

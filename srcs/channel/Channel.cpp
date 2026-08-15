@@ -52,7 +52,12 @@ void Channel::setUserLimit(size_t limit) { _userLimit = limit; }
 void Channel::removeKey() { _key = ""; }
 void Channel::removeUserLimit() { _userLimit = 0; }
 
+<<<<<<< HEAD
+void Channel::addMember(int fd, const Client &newClient)
+{
+=======
 void Channel::addMember(int fd, const Client& newClient) {
+>>>>>>> origin/master
     _members[fd] = newClient;
 }
 
@@ -121,6 +126,18 @@ bool Channel::isFull() const {
     return _members.size() >= _userLimit;
 }
 
-const std::map<int, Client>& Channel::getMembers() const {
+const std::map<int, Client> &Channel::getMembers() const
+{
     return _members;
+}
+
+Channel *Server::getChannelByName(const std::string &name)
+{
+    std::vector<Channel>::iterator it;
+    for (it = _Channel.begin(); it != _Channel.end(); ++it)
+    {
+        if (it->getName() == name)
+            return &(*it); 
+    }
+    return NULL; 
 }
