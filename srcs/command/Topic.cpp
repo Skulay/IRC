@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 17:40:24 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 19:06:01 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/14 15:05:52 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,98 @@
 
 void Server::ExecuteTopic(int fd, std::string Argv)
 {
-    std::string cible;
-    std::string contenue;
+    // std::cout << "je recoit ca " << Argv << "la taille ces ca " << Argv.length() << std::endl;
 
-    size_t space = Argv.find(" ");
-    if (space != std::string::npos)
+    std::string Subject;
+    std::string Channel;
+    if (Argv.empty())
     {
-        cible = Argv.substr(0, space);
-        contenue = Argv.substr(space + 1);
+        std::string errMsg = ":irc.local 461 " + _Client[fd].getNickname() + " TOPIC :Not enough parameters\r\n";
+        send(fd, errMsg.c_str(), errMsg.length(), 0);
+        return;
+    }
+    bool IsNewSubject = 0;
+    size_t pos = Argv.find(":");
+    if (pos != std::string::npos)
+    {
+        IsNewSubject = 1;
+        Subject = Argv.substr(pos + 1);
+        Channel = Argv.substr(0, pos);
+        size_t space = Channel.find(" ");
+        if (space != std::string::npos)
+            Channel = Channel.substr(0, space);
     }
     else
-        cible = Argv.substr(0);
-
-    if (CheckTopicValid(fd, cible))
     {
+        size_t pos = Argv.find(" ");
+        if (pos != std::string::npos)
+            Channel = Argv.substr(0, pos);
+        else
+            Channel = Argv.substr(0);
     }
-
-    // // std::cout << "je suis dans Execute topic" << std::endl;
-    // std::cout << cible << std::endl;
-    // std::cout << contenue << std::endl;
+    if (ParsTopic(fd, Channel, IsNewSubject))
+        return;
+    ExecuteCmd(fd, Channel, IsNewSubject, Subject);
+    return;
 }
 
-bool Server::CheckTopicValid(int fd, std::string cible, std::string contenue)
+bool Server::ParsTopic(int fd, std::string ChannelC, bool NewSubject)
 {
-    // le channel mexisre pas
-    if (!CheckChannel(fd, cible))
+    if (!CheckChannel(fd, ChannelC))
     {
-        std::string errMsg = ":irc.local 403 " + userNick + " " + channel + " :No such channel\r\n";
+        std::string errMsg = ":irc.local 403 " + _Client[fd].getNickname() + " " + ChannelC + " :No such channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
-        return false;
+        return true;
     }
-    Channel *chan = getChannelByName(channel);
+    else if (!CheckHasMenber(_Client[fd].getNickname(), ChannelC))
+    {
+        std::string errMsg = ":irc.local 442 " + _Client[fd].getNickname() + " " + ChannelC + " :You're not on that channel\r\n";
+        send(fd, errMsg.c_str(), errMsg.length(), 0);
+        return true;
+    }
 
-    if (!CheckHasMenber(userNick, channel))
+    if (NewSubject)
     {
-        std::string errMsg = ":irc.local 442 " + userNick + " " + channel + " :You're not on that channel\r\n";
-        send(fd, errMsg.c_str(), errMsg.length(), 0);
-        return false;
+        Channel *chan = getChannelByName(ChannelC);
+        if (chan && chan->isTopicRestricted())
+        {
+            if (!chan->isOperator(_Client[fd].getNickname()))
+            {
+                std::string errMsg = ":irc.local 482 " + _Client[fd].getNickname() + " " + ChannelC + " :You're not channel operator\r\n";
+                send(fd, errMsg.c_str(), errMsg.length(), 0);
+                return true;
+            }
+        }
     }
-    // reprend ici demain
-    else if (!contenue.empty() && chan->getTopic() && IsOperator2() )
-    {
-        std::string msg = ":irc.local 331 " + _Client[fd].getNickname() + " " + chan->getName() + " :No topic is set\r\n";
-        send(fd, msg.c_str(), msg.length(), 0);
-    }
+    return false;
 }
 
-// je suis dans Execute topic
-// jnjngd
+void Server::ExecuteCmd(int fd, std::string channel, bool NewTopic, std::string Topic)
+{
+    Channel *Chan = getChannelByName(channel);
+    if (!Chan)
+        return;
+
+    if (NewTopic) // modifier le topic
+    {
+        Chan->setTopic(Topic);
+        std::string Msg = ":" + _Client[fd].getNickname() + "!" + _Client[fd].getUsername() + "@localhost TOPIC " + Chan->getName() + " :" + Topic + "\r\n";
+
+        const std::map<int, Client> &members = Chan->getMembers();
+        for (std::map<int, Client>::const_iterator it = members.begin(); it != members.end(); ++it)
+            send(it->first, Msg.c_str(), Msg.length(), 0);
+    }
+    else // consulter le topic
+    {
+        if (Chan->getTopic().empty())
+        {
+            std::string msg = ":irc.local 331 " + _Client[fd].getNickname() + " " + Chan->getName() + " :No topic is set\r\n";
+            send(fd, msg.c_str(), msg.length(), 0);
+        }
+        else
+        {
+            std::string msg = ":irc.local 332 " + _Client[fd].getNickname() + " " + Chan->getName() + " :" + Chan->getTopic() + "\r\n";
+            send(fd, msg.c_str(), msg.length(), 0);
+        }
+    }
+}

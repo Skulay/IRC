@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 17:40:57 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 16:17:24 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,6 @@ void Server::InitCommands(void)
     _commands["KICK"] = &Server::ExecuteKick;
     _commands["INVITE"] = &Server::ExecuteInvite;
     _commands["TOPIC"] = &Server::ExecuteTopic;
+    _commands["QUIT"] = &Server::ExecuteQuit;
+    _commamds["PART"] = Server::ExecutePart;
 }

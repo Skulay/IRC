@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 18:51:27 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 16:20:47 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,18 @@
 #include <algorithm>
 #include "Channel.hpp"
 
+class Channel;
+
 class Server
 {
 private:
-    int _port;             // port du server
-    std::string _PassWord; // PassWord du server
+    int _port;
+    std::string _PassWord;
     int _ServerFd;
-    int _EpollFD; // fd qui srocke tout mos clients
+    int _EpollFD;
     struct epoll_event events[10];
     std::map<int, Client> _Client;
-    std::vector<Channel> _Channel; // tableau de channel
+    std::vector<Channel> _Channel;
     std::map<std::string, void (Server::*)(int, std::string)> _commands;
 
     void InitCommands(void);
@@ -52,13 +54,12 @@ private:
     void SendMessage(int fd, std::string Argv);
     void SendDestinataire(int fd, std::string Destination, std::string Msg);
     void ExecutePrivmsg(int fd, std::string Argv);
-    // bool ClientValid(std::string name);
-    // void ExecuteMode(int fd, std::string Argv);
-    // void ExecutePrivmsg(int fd, std::string Argv);
     void ExecuteKick(int fd, std::string Argv);
     void ExecuteInvite(int fd, std::string Argv);
     void ExecuteTopic(int fd, std::string Argv);
     void ExecuteMode(int fd, std::string Argv);
+    void ExecuteQuit(int fd, std::string Argv);
+    void ExecutePart(int fd, std::string Argv);
 
 public:
     Server();
@@ -82,7 +83,12 @@ public:
     bool CheckClientExists(const std::string &nickname);
     Channel *getChannelByName(const std::string &name);
     int getFdByNickname(const std::string &nickname);
-    bool CheckTopicValid(int fd, std::string cible);
+    bool ParsTopic(int fd, std::string Channel, bool NewSubject);
+    bool ValidExecuteMode(int fd, std::string Channel, std::string Mode, std::string ArgMode);
+    bool ValideMode(int fd, std::string Mode, std::string ArgvMode);
+    void ExecuteCmd(int fd, std::string channel, bool NewTopic, std::string Topic);
+    void Execute(int fd, std::string Channel, std::string Mode, std::string ArgMode);
+    void DisconnectClient(int fd, std::string reason);
 };
 
 #endif

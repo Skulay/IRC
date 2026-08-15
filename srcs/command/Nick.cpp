@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:47:47 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/11 14:13:25 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/14 12:42:54 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,3 +29,7 @@ void Server::ExecuteNick(int fd, std::string Argv)
         _Client[fd].SetNick(true);
     }
 }
+
+
+
+
