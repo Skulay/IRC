@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:54:12 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 16:09:36 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 19:00:02 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void Server::RunServer()
 {
-    // ouvre le fd
     this->_ServerFd = socket(AF_INET, SOCK_STREAM, 0);
     if (this->_ServerFd == -1)
         throw std::runtime_error("Erreur : impossible de creer le serveur.");
@@ -66,19 +65,18 @@ bool Server::LoopServer()
             int FdClient = events[i].data.fd;
             // si c un nouveau clients
             if (FdClient == this->_ServerFd)
-                AcceptNewClient(FdClient);
+                AcceptNewClient();
             else // sinon c un cleint qui est deja dans notre seveur
                 ReceiveFromClient(FdClient);
         }
     }
 }
 
-// fonction qui acppre kes new clients
-void Server::AcceptNewClient(int fd)
+void Server::AcceptNewClient(void)
 {
     int NewFdClient = accept(this->_ServerFd, NULL, NULL);
     if (NewFdClient == -1)
-        throw std::runtime_error("error funtion accept");
+        return;
     struct epoll_event client_event;
     memset(&client_event, 0, sizeof(client_event));
     client_event.events = EPOLLIN;
@@ -87,10 +85,10 @@ void Server::AcceptNewClient(int fd)
     if (epoll_ctl(this->_EpollFD, EPOLL_CTL_ADD, NewFdClient, &client_event) == -1)
     {
         std::cerr << "Erreur : impossible d'ajouter le client à epoll." << std::endl;
+        close(NewFdClient);
         return;
     }
-    _Client[NewFdClient] = Client(); // stock le new cli
-    std::cout << "Nouveau client accepté ! FD : " << NewFdClient << std::endl;
+    _Client[NewFdClient] = Client();
 }
 
 void Server::ReceiveFromClient(int fd)
@@ -107,12 +105,12 @@ void Server::ReceiveFromClient(int fd)
         ParsBuffer(fd);
     }
     else if (DataClient == 0)
-        DisconnectClient(fd,"");
+        DisconnectClient(fd, "");
     else
-        DisconnectClient(fd,"");
+        DisconnectClient(fd, "");
 }
 
-void Server::DisconnectClient(int fd , std::string reason)
+void Server::DisconnectClient(int fd, std::string reason)
 {
     std::map<int, Client>::iterator itClient = _Client.find(fd);
     if (itClient == _Client.end())
@@ -133,6 +131,10 @@ void Server::DisconnectClient(int fd , std::string reason)
             }
             it->removeMember(nick);
         }
+        if (it->getMembers().empty())
+            it = _Channel.erase(it);
+        else
+            ++it;
     }
 
     epoll_ctl(this->_EpollFD, EPOLL_CTL_DEL, fd, NULL);

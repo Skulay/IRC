@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:55:16 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 15:57:25 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 18:37:49 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void Server::ParsBuffer(int fd)
 
 void Server::SplitBuffer(std::string buffer, int fd)
 {
+    if (!buffer.empty() && buffer[buffer.length() - 1] == '\r')
+        buffer.erase(buffer.length() - 1);
     std::string cmd;
     std::string argv;
 
@@ -41,15 +43,12 @@ void Server::SplitBuffer(std::string buffer, int fd)
     if (pos == std::string::npos)
     {
         cmd = buffer;
-        cmd.push_back('\0');
         argv = "";
     }
     else
     {
         cmd = buffer.substr(0, pos);
-        buffer.erase(0, pos + 1);
-        size_t pos = buffer.find("\r");
-        argv = buffer.substr(0, pos);
+        argv = buffer.substr(pos + 1);
     }
     ExecuteCommand(fd, cmd, argv);
 }

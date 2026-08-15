@@ -13,7 +13,7 @@
 #include "../../includes/Client.hpp"
 
 Client::Client() : _nickname(""), _username(""), _buffer(""),
-    _CheckPass(false), _HasNick(false), _UserName(false), _validClient(false) {}
+				   _CheckPass(false), _HasNick(false), _UserName(false), _validClient(false) {}
 
 Client::Client(const Client &src)
 {
@@ -27,6 +27,10 @@ Client &Client::operator=(const Client &src)
 		_nickname = src._nickname;
 		_username = src._username;
 		_buffer = src._buffer;
+		_CheckPass = src._CheckPass;
+		_HasNick = src._HasNick;
+		_UserName = src._UserName;
+		_validClient = src._validClient;
 	}
 	return *this;
 }

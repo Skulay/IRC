@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/15 15:57:51 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 16:49:31 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 19:01:01 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void Server::ExecutePart(int fd, std::string Argv)
         reason = "";
     }
 
-    if (!CheckChannel(fd, channel))
+    if (!CheckChannel(channel))
     {
         std::string errMsg = ":irc.local 403 " + _Client[fd].getNickname() + " " + channel + " :No such channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
@@ -87,7 +87,11 @@ void Server::ExecutePart(int fd, std::string Argv)
         for (std::vector<Channel>::iterator it_c = _Channel.begin(); it_c != _Channel.end(); ++it_c)
         {
             if (it_c->getName() == channel)
+            {
                 _Channel.erase(it_c);
+                break;
+            }    
+                
         }
     }
 }

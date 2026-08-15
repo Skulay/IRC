@@ -52,12 +52,7 @@ void Channel::setUserLimit(size_t limit) { _userLimit = limit; }
 void Channel::removeKey() { _key = ""; }
 void Channel::removeUserLimit() { _userLimit = 0; }
 
-<<<<<<< HEAD
-void Channel::addMember(int fd, const Client &newClient)
-{
-=======
 void Channel::addMember(int fd, const Client& newClient) {
->>>>>>> origin/master
     _members[fd] = newClient;
 }
 

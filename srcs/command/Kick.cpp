@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 12:12:58 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 15:38:50 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 19:01:54 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void Server::kickuser(int fd, std::string pseudo, std::string channel, std::stri
             for (it_mem = members.begin(); it_mem != members.end(); ++it_mem)
                 send(it_mem->first, kickMsg.c_str(), kickMsg.length(), 0);
             it_chan->removeMember(pseudo);
+            if (it_chan->getMembers().empty())
+                _Channel.erase(it_chan);
             break;
         }
     }
@@ -80,25 +82,25 @@ bool Server::valideKick(int fd, std::string name, std::string channel)
 {
     std::string userNick = _Client[fd].getNickname();
 
-    if (!CheckChannel(fd, channel))
+    if (!CheckChannel(channel))
     {
         std::string errMsg = ":irc.local 403 " + userNick + " " + channel + " :No such channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    else if (!CheckHasMenber(userNick, channel)) 
+    else if (!CheckHasMenber(userNick, channel))
     {
         std::string errMsg = ":irc.local 442 " + userNick + " " + channel + " :You're not on that channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    else if (!IsOperator2(fd, userNick, channel)) 
+    else if (!IsOperator2(userNick, channel))
     {
         std::string errMsg = ":irc.local 482 " + userNick + " " + channel + " :You're not channel operator\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    else if (!CheckCible(name, channel)) 
+    else if (!CheckCible(name, channel))
     {
         std::string errMsg = ":irc.local 441 " + userNick + " " + name + " " + channel + " :They aren't on that channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);

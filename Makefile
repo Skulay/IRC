@@ -1,6 +1,6 @@
 NAME        = ircserv
 CXX         = c++
-CXXFLAGS    = -std=c++98 -g3
+CXXFLAGS    = -Wall -Wextra -Werror -std=c++98 -g3
 
 SRCDIR      = srcs
 INCDIR      = includes
@@ -9,6 +9,7 @@ SRCS        = $(SRCDIR)/main.cpp \
               $(SRCDIR)/server/server.cpp \
               $(SRCDIR)/server/ServerNetwork.cpp \
               $(SRCDIR)/server/ServerParser.cpp \
+              $(SRCDIR)/server/UtilsServer.cpp \
               $(SRCDIR)/client/Client.cpp \
               $(SRCDIR)/channel/Channel.cpp \
               $(SRCDIR)/command/pass.cpp \

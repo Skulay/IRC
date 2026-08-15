@@ -3,31 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/08/15 16:17:24 by amkhelif         ###   ########.fr       */
-=======
-/*   Updated: 2026/08/14 17:44:16 by alehamad         ###   ########.fr       */
->>>>>>> origin/master
+/*   Updated: 2026/08/15 18:13:44 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
-<<<<<<< HEAD
-Server::Server() { InitCommands(); }
-// Server::Server(const Server &src)
-// {
-//     *this = src;
-// }
-=======
 Server::Server() {
     InitCommands(); 
     InitBotCommands();
 }
->>>>>>> origin/master
 
 // Server &Server::operator=(const Server &src)
 // {
@@ -88,10 +76,8 @@ void Server::InitCommands(void)
     _commands["INVITE"] = &Server::ExecuteInvite;
     _commands["TOPIC"] = &Server::ExecuteTopic;
     _commands["QUIT"] = &Server::ExecuteQuit;
-    _commamds["PART"] = Server::ExecutePart;
+    _commands["PART"] = &Server::ExecutePart;
 }
-<<<<<<< HEAD
-=======
 
 void Server::InitBotCommands(void)
 {
@@ -104,4 +90,3 @@ void Server::InitBotCommands(void)
 }
 
 
->>>>>>> origin/master

@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 19:11:10 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 17:43:43 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 18:27:21 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void Server::ExecuteMode(int fd, std::string Argv)
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return;
     }
-    std::string Channel;
+    std::string ChannelN;
     std::string Mode;
     std::string ArgMode;
     size_t pos = Argv.find(" ");
     if (pos != std::string::npos)
-        Channel = Argv.substr(0, pos);
+        ChannelN = Argv.substr(0, pos);
     else
         return;
     std::string reste = Argv.substr(pos + 1);
@@ -38,6 +38,10 @@ void Server::ExecuteMode(int fd, std::string Argv)
     }
     else
         Mode = reste.substr(0);
+   
+    Channel *chan = getChannelByName(ChannelN);
+    if (!chan)
+        return;
     if (Mode.empty())
     {
         std::string currentModes = "+";
@@ -70,10 +74,10 @@ void Server::ExecuteMode(int fd, std::string Argv)
         return;
     }
 
-    if (!ValidExecuteMode(fd, Channel, Mode, ArgMode))
+    if (!ValidExecuteMode(fd, ChannelN, Mode, ArgMode))
         return;
 
-    Execute(fd, Channel, Mode, ArgMode);
+    Execute(fd, ChannelN, Mode, ArgMode);
 }
 
 void Server::Execute(int fd, std::string ChannelName, std::string Mode, std::string ArgMode)
@@ -171,7 +175,7 @@ bool Server::ValidExecuteMode(int fd, std::string Channel, std::string Mode, std
 {
     std::string userNick = _Client[fd].getNickname();
 
-    if (!CheckChannel(fd, Channel))
+    if (!CheckChannel(Channel))
     {
         std::string errMsg = ":irc.local 403 " + userNick + " " + Channel + " :No such channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
@@ -183,7 +187,7 @@ bool Server::ValidExecuteMode(int fd, std::string Channel, std::string Mode, std
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    if (!IsOperator2(fd, userNick, Channel))
+    if (!IsOperator2( userNick, Channel))
     {
         std::string errMsg = ":irc.local 482 " + userNick + " " + Channel + " :You're not channel operator\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);

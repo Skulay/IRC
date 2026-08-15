@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/08/15 16:20:47 by amkhelif         ###   ########.fr       */
-=======
-/*   Updated: 2026/08/14 17:44:57 by alehamad         ###   ########.fr       */
->>>>>>> origin/master
+/*   Updated: 2026/08/15 18:16:39 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +61,7 @@ private:
     void ExecuteQuit(int fd, std::string Argv);
     void ExecutePart(int fd, std::string Argv);
 
-    //BOT
+    // BOT
     typedef std::string (Server::*BotCmd)();
     std::map<std::string, BotCmd> _botCommands;
 
@@ -85,15 +81,15 @@ public:
     ~Server();
     bool CheckAv(char **av);
     bool isStringPrintable(const std::string &str);
-    bool IsOperator2(int fd, std::string name, std::string channel);
+    bool IsOperator2(std::string name, std::string channel);
     void RunServer(void);
     bool LoopServer(void);
-    void AcceptNewClient(int fd);
+    void AcceptNewClient();
     void ReceiveFromClient(int fd);
     void ParsBuffer(int fd);
     void SplitBuffer(std::string buffer, int fd);
     void ExecuteCommand(int fd, std::string Cmd, std::string Argv);
-    bool CheckChannel(int fd, std::string channel);
+    bool CheckChannel(std::string channel);
     bool CheckHasMenber(std::string name, std::string channel);
     bool CheckCible(std::string name, std::string channel);
     bool valideKick(int fd, std::string name, std::string channel);

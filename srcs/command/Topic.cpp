@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 17:40:24 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/14 15:05:52 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 18:28:51 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void Server::ExecuteTopic(int fd, std::string Argv)
 
 bool Server::ParsTopic(int fd, std::string ChannelC, bool NewSubject)
 {
-    if (!CheckChannel(fd, ChannelC))
+    if (!CheckChannel(ChannelC))
     {
         std::string errMsg = ":irc.local 403 " + _Client[fd].getNickname() + " " + ChannelC + " :No such channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);

@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 15:43:45 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/12 17:12:54 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/15 18:28:35 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool Server::ValideInvite(int fd, std::string cible, std::string channel)
 {
     std::string userNick = _Client[fd].getNickname();
 
-    if (!CheckChannel(fd, channel))
+    if (!CheckChannel(channel))
     {
         std::string errMsg = ":irc.local 403 " + userNick + " " + channel + " :No such channel\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
@@ -80,7 +80,7 @@ bool Server::ValideInvite(int fd, std::string cible, std::string channel)
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    else if (!IsOperator2(fd, userNick, channel))
+    else if (!IsOperator2(userNick, channel))
     {
         std::string errMsg = ":irc.local 482 " + userNick + " " + channel + " :You're not channel operator\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
@@ -100,7 +100,7 @@ bool Server::ValideInvite(int fd, std::string cible, std::string channel)
     }
     Channel *chan = getChannelByName(channel);
 
-    if (chan && chan->isInviteOnly() && !IsOperator2(fd, _Client[fd].getNickname(), channel))
+    if (chan && chan->isInviteOnly() && !IsOperator2(_Client[fd].getNickname(), channel))
     {
         std::string errMsg = ":irc.local 482 " + _Client[fd].getNickname() + " " + channel + " :You're not channel operator\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
