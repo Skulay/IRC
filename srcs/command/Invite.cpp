@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 15:43:45 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 18:28:35 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/16 17:44:01 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void Server::ExecuteInvite(int fd, std::string Argv)
 {
-
     if (Argv.empty())
     {
         std::string errMsg = ":irc.local 461 " + _Client[fd].getNickname() + " INVITE :Not enough parameters\r\n";

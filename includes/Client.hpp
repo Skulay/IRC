@@ -14,44 +14,45 @@
 #define CLIENT_HPP
 
 #include <string>
+
 class Client
 {
-private:
-	std::string _nickname;
-	std::string _username;
-	std::string _buffer;
-	bool _CheckPass;
-	bool _HasNick;
-	bool _UserName;
-	bool _validClient;
-	bool _operator;
+	private:
+		std::string _nickname;
+		std::string _username;
+		std::string _buffer;
+		bool _CheckPass;
+		bool _HasNick;
+		bool _UserName;
+		bool _validClient;
+		bool _operator;
 
-public:
-	Client();							  // constructeur
-	Client(const Client &src);			  // constructeur de copy
-	Client &operator=(const Client &src); // operator=
-	~Client();							  // destructeur
+	public:
+		Client();
+		Client(const Client &src);
+		Client &operator=(const Client &src);
+		~Client();
 
-	// GETTERR
-	std::string getNickname() const;
-	std::string getUsername() const;
-	std::string getBuffer() const;
-	int GetPassClient() const;
-	int GetNickClient() const;
-	int GetUserNameClient() const;
-	int GetValidClient() const;
-	int GetOperator() const;
-	// SETTERR
-	void setNickname(std::string nickName);
-	void setUsername(std::string userName);
-	void setBuffer(std::string buffer);
-	void SetPass(int IsValide);
-	void SetNick(int IsValide);
-	void SetUserNameB(int IsValide);
-	void SetValidClient(int fd, int isvalide);
-	void SetOperator(int fd, int IsValide);
-	// UTIL
-	void addToBuffer(std::string bufferTwo);
+		// GETTERR
+		std::string getNickname() const;
+		std::string getUsername() const;
+		std::string getBuffer() const;
+		int GetPassClient() const;
+		int GetNickClient() const;
+		int GetUserNameClient() const;
+		int GetValidClient() const;
+		int GetOperator() const;
+		// SETTERR
+		void setNickname(std::string nickName);
+		void setUsername(std::string userName);
+		void setBuffer(std::string buffer);
+		void SetPass(int IsValide);
+		void SetNick(int IsValide);
+		void SetUserNameB(int IsValide);
+		void SetValidClient(int fd, int isvalide);
+		void SetOperator(int fd, int IsValide);
+		// UTIL
+		void addToBuffer(std::string bufferTwo);
 };
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 14:09:01 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:33:47 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/16 17:45:11 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
     }
     else
     {
-        // std::cout << "je cherche" + Destination << std::endl;
         std::vector<Channel>::iterator it;
 
         int find = -1;

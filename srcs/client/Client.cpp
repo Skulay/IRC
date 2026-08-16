@@ -42,6 +42,7 @@ int Client::GetPassClient() const { return _CheckPass; }
 int Client::GetNickClient() const { return _HasNick; }
 int Client::GetUserNameClient() const { return _UserName; }
 int Client::GetValidClient() const { return _validClient; }
+int Client::GetOperator() const { return (_operator); }
 
 // ---- Setters ----
 
@@ -49,47 +50,13 @@ void Client::setNickname(std::string nickName) { _nickname = nickName; }
 void Client::setUsername(std::string userName) { _username = userName; }
 void Client::setBuffer(std::string buffer) { _buffer = buffer; }
 void Client::SetPass(int IsValide) { _CheckPass = IsValide; }
+
 // ---- Util ----
-void Client::addToBuffer(std::string bufferTwo)
-{
-	_buffer += bufferTwo;
-}
-void Client::SetNick(int IsValide)
-{
-	_HasNick = IsValide;
-}
 
-// int Client::GetNickClient()
-// {
-// 	return _HasNick;
-// }
-// int Client::GetUserNameClient()
-// {
-// 	return _UserName;
-// }
-// void Client::SetValidClient(int IsValide)
-// {
-// 	_validClient = IsValide;
-// }
-
-void Client::SetUserNameB(int IsValide)
-{
-	_UserName = IsValide;
-}
-
-// int Client::GetValidClient()
-// {
-// 	return _validClient;
-// }
-
-void Client::SetOperator(int fd, int Isvalide)
-{
+void Client::addToBuffer(std::string bufferTwo) { _buffer += bufferTwo; }
+void Client::SetNick(int IsValide) { _HasNick = IsValide; }
+void Client::SetUserNameB(int IsValide) { _UserName = IsValide; }
+void Client::SetOperator(int fd, int Isvalide) {
 	(void)fd;
-
 	_operator = Isvalide;
-}
-
-int Client::GetOperator() const
-{
-	return (_operator);
 }

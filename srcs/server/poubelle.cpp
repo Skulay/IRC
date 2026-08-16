@@ -1,37 +1,5 @@
 #include "../../includes/Server.hpp"
 
-
-
-
-
-// this function split a buffer first string is
-// cmd second is argv
-
-
-// void Server::ExecuteJoin(int fd, std::string Argv)
-// {
-// }
-
-// void Server::ExecutePrivmsg(int fd, std::string Argv)
-// {
-// }
-
-// void Server::ExecuteKick(int fd, std::string Argv)
-// {
-// }
-
-// void Server::ExecuteInvite(int fd, std::string Argv)
-// {
-// }
-
-// void Server::ExecuteTopic(int fd, std::string Argv)
-// {
-// }
-
-// void Server::ExecuteMode(int fd, std::string Argv)
-// {
-// }
-
 bool Server::IsValidNickName(std::string Argv, int fd)
 {
     if (Argv.empty())

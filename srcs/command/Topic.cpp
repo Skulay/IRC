@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 17:40:24 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 18:28:51 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/16 17:45:39 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void Server::ExecuteTopic(int fd, std::string Argv)
 {
-    // std::cout << "je recoit ca " << Argv << "la taille ces ca " << Argv.length() << std::endl;
-
     std::string Subject;
     std::string Channel;
     if (Argv.empty())

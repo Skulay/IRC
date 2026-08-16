@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 18:13:44 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/16 17:46:03 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,8 @@ Server::Server() {
     InitBotCommands();
 }
 
-// Server &Server::operator=(const Server &src)
-// {
-//     if (this != &src)
-//     {
-//         this->_port = src._port;
-//         this->_password = src._password;
-//         this->_serverSocket = src._serverSocket;
-//         this->_Client = src._Client;
-//         this->_Channel = src._Channel;
-//         this->_pollFds = src._pollFds;
-//     }
-//     return *this;
-// }
-
 Server::~Server() {}
 
-// check le port et la password
 bool Server::CheckAv(char **av)
 {
 

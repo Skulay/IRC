@@ -40,9 +40,11 @@ Channel::~Channel() {}
 std::string Channel::getName() const { return _name; }
 std::string Channel::getTopic() const { return _topic; }
 std::string Channel::getKey() const { return _key; }
+const std::map<int, Client> &Channel::getMembers() const { return _members; }
+size_t Channel::getUserLimit() const { return _userLimit; }
+
 bool Channel::isInviteOnly() const { return _inviteOnly; }
 bool Channel::isTopicRestricted() const { return _topicRestricted; }
-size_t Channel::getUserLimit() const { return _userLimit; }
 
 void Channel::setTopic(const std::string &topic) { _topic = topic; }
 void Channel::setKey(const std::string &key) { _key = key; }
@@ -52,9 +54,7 @@ void Channel::setUserLimit(size_t limit) { _userLimit = limit; }
 void Channel::removeKey() { _key = ""; }
 void Channel::removeUserLimit() { _userLimit = 0; }
 
-void Channel::addMember(int fd, const Client& newClient) {
-    _members[fd] = newClient;
-}
+void Channel::addMember(int fd, const Client& newClient) { _members[fd] = newClient; }
 
 void Channel::removeMember(const std::string &nickname) {
     for (std::map<int, Client>::iterator it = _members.begin(); it != _members.end(); ++it)
@@ -119,11 +119,6 @@ bool Channel::isFull() const {
     if (_userLimit == 0)
         return false;
     return _members.size() >= _userLimit;
-}
-
-const std::map<int, Client> &Channel::getMembers() const
-{
-    return _members;
 }
 
 Channel *Server::getChannelByName(const std::string &name)
