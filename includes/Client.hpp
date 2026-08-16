@@ -13,7 +13,6 @@
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
 
-#include <fcntl.h>
 #include <string>
 class Client
 {

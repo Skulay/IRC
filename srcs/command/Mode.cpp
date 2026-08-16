@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 19:11:10 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 18:27:21 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/16 17:36:47 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void Server::ExecuteMode(int fd, std::string Argv)
 {
     if (Argv.empty())
     {
-        std::string errMsg = ":irc.local 461 " + _Client[fd].getNickname() + " INVITE :Not enough parameters\r\n";
+        std::string errMsg = ":irc.local 461 " + _Client[fd].getNickname() + " MODE :Not enough parameters\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return;
     }

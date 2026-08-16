@@ -27,7 +27,7 @@ std::string Server::BuildBotReply(const std::string &msg) {
     std::map<std::string, BotCmd>::iterator it = _botCommands.find(cmd);
 
     if (it == _botCommands.end())
-        return "Unknow command: Type help";
+        return "Unknown command: Type help";
     return (this->*(it->second))();
 }
 

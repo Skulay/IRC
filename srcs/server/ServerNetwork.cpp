@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerNetwork.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:54:12 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 19:00:02 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/16 17:34:48 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,6 @@ void Server::DisconnectClient(int fd, std::string reason)
         }
         if (it->getMembers().empty())
             it = _Channel.erase(it);
-        else
-            ++it;
     }
 
     epoll_ctl(this->_EpollFD, EPOLL_CTL_DEL, fd, NULL);

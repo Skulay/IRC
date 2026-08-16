@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Join.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 18:55:43 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 19:05:09 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/16 17:36:01 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void Server::ExecuteJoin(int fd, std::string Argv)
         channel = Argv;
     for (std::vector<Channel>::size_type i = 0; i < _Channel.size(); ++i)
     {
-        if (_Channel[i].getName() == Argv)
+        if (_Channel[i].getName() == channel)
         {
             if (_Channel[i].isInviteOnly() && !_Channel[i].isInvited(_Client[fd].getNickname()))
             {
