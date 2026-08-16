@@ -15,10 +15,7 @@
 Client::Client() : _nickname(""), _username(""), _buffer(""),
 				   _CheckPass(false), _HasNick(false), _UserName(false), _validClient(false) {}
 
-Client::Client(const Client &src)
-{
-	*this = src;
-}
+Client::Client(const Client &src) { *this = src; }
 
 Client &Client::operator=(const Client &src)
 {
