@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Mode.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 19:11:10 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:36:47 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 13:13:16 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void Server::ExecuteMode(int fd, std::string Argv)
 {
+    std::cout << "je suis dans executemode" << std::endl;
     if (Argv.empty())
     {
         std::string errMsg = ":irc.local 461 " + _Client[fd].getNickname() + " MODE :Not enough parameters\r\n";
@@ -25,20 +26,25 @@ void Server::ExecuteMode(int fd, std::string Argv)
     std::string ArgMode;
     size_t pos = Argv.find(" ");
     if (pos != std::string::npos)
-        ChannelN = Argv.substr(0, pos);
-    else
-        return;
-    std::string reste = Argv.substr(pos + 1);
-    pos = reste.find(" ");
-    if (pos != std::string::npos)
     {
-        Mode = reste.substr(0, pos);
-        if (pos + 1 != reste.length())
-            ArgMode = reste.substr(pos + 1);
+        ChannelN = Argv.substr(0, pos);
+        std::string reste = Argv.substr(pos + 1);
+        pos = reste.find(" ");
+        if (pos != std::string::npos)
+        {
+            Mode = reste.substr(0, pos);
+            if (pos + 1 != reste.length())
+                ArgMode = reste.substr(pos + 1);
+        }
+        else
+            Mode = reste.substr(0);
     }
     else
-        Mode = reste.substr(0);
-   
+    {
+        ChannelN = Argv;
+        Mode = "";
+    }
+
     Channel *chan = getChannelByName(ChannelN);
     if (!chan)
         return;
@@ -82,14 +88,16 @@ void Server::ExecuteMode(int fd, std::string Argv)
 
 void Server::Execute(int fd, std::string ChannelName, std::string Mode, std::string ArgMode)
 {
+    std::cout << "je suis dans execute" << std::endl;
     Channel *chan = getChannelByName(ChannelName);
     if (!chan)
         return;
     char sign = Mode[0];
     char flag = Mode[1];
-
+    std::cout << "sign = " + sign << "flag = " + flag << std::endl;
     if (flag == 'i')
     {
+        std::cout << "Test du mode i" << std::endl;
         if (sign == '-')
             chan->setInviteOnly(false);
         else
@@ -173,6 +181,7 @@ bool Server::ValideMode(int fd, std::string Mode, std::string ArgMode)
 
 bool Server::ValidExecuteMode(int fd, std::string Channel, std::string Mode, std::string ArgvMode)
 {
+    std::cout << " je suis dans valid execute mode" << std::endl;
     std::string userNick = _Client[fd].getNickname();
 
     if (!CheckChannel(Channel))
@@ -187,7 +196,7 @@ bool Server::ValidExecuteMode(int fd, std::string Channel, std::string Mode, std
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
-    if (!IsOperator2( userNick, Channel))
+    if (!IsOperator2(userNick, Channel))
     {
         std::string errMsg = ":irc.local 482 " + userNick + " " + Channel + " :You're not channel operator\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);

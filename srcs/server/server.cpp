@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 12:04:51 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 13:28:43 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
-Server::Server() {
+Server::Server()
+{
     signal(SIGPIPE, SIG_IGN);
-    InitCommands(); 
+    InitCommands();
     InitBotCommands();
 }
 
@@ -30,7 +31,7 @@ bool Server::CheckAv(char **av)
         return (true);
     }
     this->_PassWord = av[2];
-    if (_PassWord.length() < 4 || isStringPrintable(_PassWord))
+    if (_PassWord.length() < 4 || !isStringPrintable(_PassWord))
     {
         std::cerr << " error password" << std::endl;
         return (true);
@@ -43,9 +44,9 @@ bool Server::isStringPrintable(const std::string &str)
     for (size_t i = 0; i < str.length(); ++i)
     {
         if (!std::isprint(static_cast<unsigned char>(str[i])))
-            return true;
+            return false;
     }
-    return false;
+    return true;
 }
 
 void Server::InitCommands(void)
@@ -67,12 +68,10 @@ void Server::InitCommands(void)
 
 void Server::InitBotCommands(void)
 {
-    _botCommands["ping"]  = &Server::BotPing;
-    _botCommands["dice"]  = &Server::BotDice;
-    _botCommands["coin"]  = &Server::BotCoin;
-    _botCommands["fact"]  = &Server::Botfacts;
+    _botCommands["ping"] = &Server::BotPing;
+    _botCommands["dice"] = &Server::BotDice;
+    _botCommands["coin"] = &Server::BotCoin;
+    _botCommands["fact"] = &Server::Botfacts;
     _botCommands["users"] = &Server::BotUsers;
-    _botCommands["help"]  = &Server::BotHelp;
+    _botCommands["help"] = &Server::BotHelp;
 }
-
-

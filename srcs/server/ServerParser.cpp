@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerParser.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:55:16 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 12:08:08 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 13:26:21 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void Server::ParsBuffer(int fd)
         DisconnectClient(fd, "Excess flood");
         return;
     }
-    
+
     size_t pos = buffer.find("\n");
     while (pos != std::string::npos)
     {
@@ -66,6 +66,9 @@ void Server::ExecuteCommand(int fd, std::string Cmd, std::string Argv)
     {
         std::cerr << "this CMD " << Cmd << " is not available" << std::endl;
         std::cerr << "Command: " << Cmd + " " << Argv << std::endl;
+        std::string errMsg = ":irc.local 421 " + _Client[fd].getNickname() + " " + Cmd + " :Unknown command\r\n";
+        send(fd, errMsg.c_str(), errMsg.length(), 0);
+
         return;
     }
     (this->*(it->second))(fd, Argv);

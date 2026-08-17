@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 12:05:04 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 13:27:29 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ class Server
 		std::string _PassWord;
 		int _ServerFd;
 		int _EpollFD;
-		struct epoll_event events[10];
+		struct epoll_event events[120];
 		std::map<int, Client> _Client;
 		std::vector<Channel> _Channel;
 		std::map<std::string, void (Server::*)(int, std::string)> _commands;

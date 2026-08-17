@@ -65,6 +65,7 @@ void Channel::removeMember(const std::string &nickname) {
             break;
         }
     }
+    removeOperator(nickname);
 }
 
 bool Channel::hasMember(const std::string &nickname) const {

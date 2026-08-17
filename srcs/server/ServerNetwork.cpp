@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerNetwork.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:54:12 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 12:05:31 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 13:19:29 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ void Server::AcceptNewClient(void)
     int NewFdClient = accept(this->_ServerFd, NULL, NULL);
     if (NewFdClient == -1)
         return;
+    if (fcntl(NewFdClient, F_SETFL, O_NONBLOCK) == -1)
+    {
+        close(NewFdClient);
+        return;
+    }
     struct epoll_event client_event;
     memset(&client_event, 0, sizeof(client_event));
     client_event.events = EPOLLIN;
@@ -119,7 +124,7 @@ void Server::DisconnectClient(int fd, std::string reason)
     std::string nick = itClient->second.getNickname();
     std::string user = itClient->second.getUsername();
     std::string quitMsg = ":" + nick + "!" + user + "@localhost QUIT :" + reason + "\r\n";
-    
+
     std::vector<Channel>::iterator it = _Channel.begin();
     while (it != _Channel.end())
     {

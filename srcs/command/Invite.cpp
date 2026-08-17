@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Invite.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 15:43:45 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:44:01 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 13:24:34 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,6 @@ bool Server::ValideInvite(int fd, std::string cible, std::string channel)
     else if (!CheckHasMenber(userNick, channel))
     {
         std::string errMsg = ":irc.local 442 " + userNick + " " + channel + " :You're not on that channel\r\n";
-        send(fd, errMsg.c_str(), errMsg.length(), 0);
-        return false;
-    }
-    else if (!IsOperator2(userNick, channel))
-    {
-        std::string errMsg = ":irc.local 482 " + userNick + " " + channel + " :You're not channel operator\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return false;
     }
