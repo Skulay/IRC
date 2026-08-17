@@ -6,12 +6,13 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 12:12:58 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 19:01:54 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:40:12 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+// parse kick command arguments channel target user and optional reason
 void Server::ExecuteKick(int fd, std::string Argv)
 {
     size_t space_pos1 = Argv.find(' ');
@@ -21,7 +22,6 @@ void Server::ExecuteKick(int fd, std::string Argv)
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return;
     }
-
     std::string channel = Argv.substr(0, space_pos1);
     if (channel.empty() || channel[0] != '#')
     {
@@ -57,6 +57,7 @@ void Server::ExecuteKick(int fd, std::string Argv)
     kickuser(fd, pseudo, channel, reason);
 }
 
+// broadcast kick notification to channel members remove user and delete channel if empty
 void Server::kickuser(int fd, std::string pseudo, std::string channel, std::string reason)
 {
 
@@ -78,6 +79,7 @@ void Server::kickuser(int fd, std::string pseudo, std::string channel, std::stri
     }
 }
 
+// validate channel existence operator privileges and target user presence before kicking
 bool Server::valideKick(int fd, std::string name, std::string channel)
 {
     std::string userNick = _Client[fd].getNickname();

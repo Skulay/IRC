@@ -24,7 +24,6 @@ SRCS        = $(SRCDIR)/main.cpp \
               $(SRCDIR)/command/Invite.cpp \
               $(SRCDIR)/command/Quit.cpp \
               $(SRCDIR)/command/Topic.cpp \
-              $(SRCDIR)/server/poubelle.cpp \
               $(SRCDIR)/bonus/bot/bot.cpp \
               $(SRCDIR)/bonus/bot/BotCommands.cpp
 			  

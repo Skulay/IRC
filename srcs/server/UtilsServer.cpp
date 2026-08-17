@@ -6,12 +6,13 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 14:30:57 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 18:16:23 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 17:47:58 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+// check if channel exist on server
 bool Server::CheckChannel(std::string channel)
 {
     std::vector<Channel>::const_iterator it;
@@ -23,6 +24,7 @@ bool Server::CheckChannel(std::string channel)
     return (false);
 }
 
+// check if user is a member of channel
 bool Server::CheckHasMenber(std::string name, std::string channel)
 {
     for (std::vector<Channel>::iterator it = this->_Channel.begin(); it != this->_Channel.end(); ++it)
@@ -37,6 +39,7 @@ bool Server::CheckHasMenber(std::string name, std::string channel)
     return (false);
 }
 
+// check if user is in channel
 bool Server::CheckCible(std::string name, std::string channel)
 {
     for (std::vector<Channel>::iterator it = this->_Channel.begin(); it != this->_Channel.end(); ++it)
@@ -51,6 +54,7 @@ bool Server::CheckCible(std::string name, std::string channel)
     return false;
 }
 
+// check if user is opeator is channel
 bool Server::IsOperator2(std::string name, std::string channel)
 {
     for (std::vector<Channel>::iterator it = this->_Channel.begin(); it != this->_Channel.end(); ++it)
@@ -64,6 +68,7 @@ bool Server::IsOperator2(std::string name, std::string channel)
     return (false);
 }
 
+// check if user exist on server
 bool Server::CheckClientExists(const std::string &nickname)
 {
     std::map<int, Client>::const_iterator it;
@@ -75,6 +80,7 @@ bool Server::CheckClientExists(const std::string &nickname)
     return false;
 }
 
+// get fd by nickname
 int Server::getFdByNickname(const std::string &nickname)
 {
     std::map<int, Client>::const_iterator it;

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Privmsg.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/11 14:09:01 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:45:11 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:28:20 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+// parse privilege message arguments destination and text then route to bot or recipient
 void Server::ExecutePrivmsg(int fd, std::string Argv)
 {
     std::string phrase;
@@ -53,6 +54,7 @@ void Server::ExecutePrivmsg(int fd, std::string Argv)
         SendDestinataire(fd, destination, phrase);
 }
 
+// route private message to user or channel members with membership and error checks
 void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
 {
 
@@ -61,7 +63,6 @@ void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
     {
         int fd_destination = -1;
         std::map<int, Client>::const_iterator it;
-
         for (it = _Client.begin(); it != _Client.end(); it++)
         {
             if (Destination == it->second.getNickname())
@@ -70,7 +71,6 @@ void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
                 break;
             }
         }
-
         if (fd_destination != -1)
         {
             std::string fullMsg = ":" + _Client[fd].getNickname() + " PRIVMSG " + Destination + " :" + Msg + "\r\n";
@@ -85,7 +85,6 @@ void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
     else
     {
         std::vector<Channel>::iterator it;
-
         int find = -1;
         for (it = _Channel.begin(); it != _Channel.end(); ++it)
         {
@@ -96,7 +95,7 @@ void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
                 find = 1;
                 std::string fullMsg = ":" + _Client[fd].getNickname() + " PRIVMSG " + Destination + " :" + Msg + "\r\n";
                 std::map<int, Client>::const_iterator it_member;
-                if (it->hasMember(_Client[fd].getNickname())) // on verifie si le client est menbre sinon
+                if (it->hasMember(_Client[fd].getNickname()))
                 {
                     for (it_member = it->getMembers().begin(); it_member != it->getMembers().end(); ++it_member)
                     {
@@ -112,7 +111,7 @@ void Server::SendDestinataire(int fd, std::string Destination, std::string Msg)
                 break;
             }
         }
-        if (find == -1) // channel pas trouver
+        if (find == -1)
         {
             std::string errMsg = ":irc.local 401 " + _Client[fd].getNickname() + " " + Destination + " :No such nick/channel\r\n";
             send(fd, errMsg.c_str(), errMsg.length(), 0);

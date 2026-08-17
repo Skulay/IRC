@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Topic.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 17:40:24 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:45:39 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:21:35 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+// parse topic command arguments to determine view or update intent
 void Server::ExecuteTopic(int fd, std::string Argv)
 {
     std::string Subject;
@@ -47,6 +48,7 @@ void Server::ExecuteTopic(int fd, std::string Argv)
     return;
 }
 
+// validate channel existence membership and operator privilege for topic change
 bool Server::ParsTopic(int fd, std::string ChannelC, bool NewSubject)
 {
     if (!CheckChannel(ChannelC))
@@ -78,13 +80,14 @@ bool Server::ParsTopic(int fd, std::string ChannelC, bool NewSubject)
     return false;
 }
 
+// set channel topic and broadcast or reply with current topic status
 void Server::ExecuteCmd(int fd, std::string channel, bool NewTopic, std::string Topic)
 {
     Channel *Chan = getChannelByName(channel);
     if (!Chan)
         return;
 
-    if (NewTopic) // modifier le topic
+    if (NewTopic)
     {
         Chan->setTopic(Topic);
         std::string Msg = ":" + _Client[fd].getNickname() + "!" + _Client[fd].getUsername() + "@localhost TOPIC " + Chan->getName() + " :" + Topic + "\r\n";
@@ -93,7 +96,7 @@ void Server::ExecuteCmd(int fd, std::string channel, bool NewTopic, std::string 
         for (std::map<int, Client>::const_iterator it = members.begin(); it != members.end(); ++it)
             send(it->first, Msg.c_str(), Msg.length(), 0);
     }
-    else // consulter le topic
+    else
     {
         if (Chan->getTopic().empty())
         {

@@ -6,21 +6,30 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 13:28:43 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:10:58 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
-Server::Server()
+// clean up all allocated resources sockets and containers on server
+Server::~Server()
 {
-    signal(SIGPIPE, SIG_IGN);
-    InitCommands();
-    InitBotCommands();
+    for (std::map<int, Client>::iterator it = _Client.begin(); it != _Client.end(); ++it)
+    {
+        epoll_ctl(this->_EpollFD, EPOLL_CTL_DEL, it->first, NULL);
+        close(it->first);
+    }
+    _Client.clear();
+    _Channel.clear();
+
+    if (this->_EpollFD != -1)
+        close(this->_EpollFD);
+    if (this->_ServerFd != -1)
+        close(this->_ServerFd);
 }
 
-Server::~Server() {}
-
+// validate port range and password requirements from command line arguments
 bool Server::CheckAv(char **av)
 {
 
@@ -39,6 +48,7 @@ bool Server::CheckAv(char **av)
     return (false);
 }
 
+// check if all characters in string are printable ascii
 bool Server::isStringPrintable(const std::string &str)
 {
     for (size_t i = 0; i < str.length(); ++i)
@@ -74,4 +84,18 @@ void Server::InitBotCommands(void)
     _botCommands["fact"] = &Server::Botfacts;
     _botCommands["users"] = &Server::BotUsers;
     _botCommands["help"] = &Server::BotHelp;
+}
+
+// intercept ctrl c
+static void capte(int sig)
+{
+    (void)sig;
+}
+
+Server::Server()
+{
+    signal(SIGPIPE, SIG_IGN); // client qui ce deco
+    signal(SIGINT, capte); // capte ctrl c
+    InitCommands();
+    InitBotCommands();
 }

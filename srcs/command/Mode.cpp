@@ -6,15 +6,15 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 19:11:10 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 13:13:16 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:37:41 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+// parse channel and modes arguments then display current modes or execute changes
 void Server::ExecuteMode(int fd, std::string Argv)
 {
-    std::cout << "je suis dans executemode" << std::endl;
     if (Argv.empty())
     {
         std::string errMsg = ":irc.local 461 " + _Client[fd].getNickname() + " MODE :Not enough parameters\r\n";
@@ -79,16 +79,14 @@ void Server::ExecuteMode(int fd, std::string Argv)
         send(fd, rpl329.c_str(), rpl329.length(), 0);
         return;
     }
-
     if (!ValidExecuteMode(fd, ChannelN, Mode, ArgMode))
         return;
-
     Execute(fd, ChannelN, Mode, ArgMode);
 }
 
+// apply specified channel mode change and broadcast notification to all members
 void Server::Execute(int fd, std::string ChannelName, std::string Mode, std::string ArgMode)
 {
-    std::cout << "je suis dans execute" << std::endl;
     Channel *chan = getChannelByName(ChannelName);
     if (!chan)
         return;
@@ -97,7 +95,6 @@ void Server::Execute(int fd, std::string ChannelName, std::string Mode, std::str
     std::cout << "sign = " + sign << "flag = " + flag << std::endl;
     if (flag == 'i')
     {
-        std::cout << "Test du mode i" << std::endl;
         if (sign == '-')
             chan->setInviteOnly(false);
         else
@@ -141,6 +138,8 @@ void Server::Execute(int fd, std::string ChannelName, std::string Mode, std::str
     for (std::map<int, Client>::const_iterator it = members.begin(); it != members.end(); ++it)
         send(it->first, notif.c_str(), notif.length(), 0);
 }
+
+// check if mode syntax is valid and required argument is provided
 bool Server::ValideMode(int fd, std::string Mode, std::string ArgMode)
 {
     if (Mode.length() < 2 || (Mode[0] != '+' && Mode[0] != '-'))
@@ -159,7 +158,6 @@ bool Server::ValideMode(int fd, std::string Mode, std::string ArgMode)
             break;
         }
     }
-
     if (!found)
     {
         std::string errMsg = ":irc.local 472 " + _Client[fd].getNickname() + " " + flag + " :is unknown mode char to me\r\n";
@@ -179,11 +177,10 @@ bool Server::ValideMode(int fd, std::string Mode, std::string ArgMode)
     return true;
 }
 
+// validate channel existence operator rights and specific mode constraints before execution
 bool Server::ValidExecuteMode(int fd, std::string Channel, std::string Mode, std::string ArgvMode)
 {
-    std::cout << " je suis dans valid execute mode" << std::endl;
     std::string userNick = _Client[fd].getNickname();
-
     if (!CheckChannel(Channel))
     {
         std::string errMsg = ":irc.local 403 " + userNick + " " + Channel + " :No such channel\r\n";
@@ -234,6 +231,5 @@ bool Server::ValidExecuteMode(int fd, std::string Channel, std::string Mode, std
         if (std::atoi(ArgvMode.c_str()) <= 0)
             return false;
     }
-
     return true;
 }

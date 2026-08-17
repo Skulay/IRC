@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:54:12 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 13:19:29 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:13:19 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,60 +18,61 @@ void Server::RunServer()
     if (this->_ServerFd == -1)
         throw std::runtime_error("Erreur : impossible de creer le serveur.");
     int opt = 1;
-    // permet que le port soit reutilisable directement apres avoir etait liberer
+    // allow port reuse immediately after server shutdown
     if (setsockopt(this->_ServerFd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) == -1)
         throw std::runtime_error("Erreur : impossible de configurer loption SO_REUSEADDR.");
-    // rend le socket non bloquant
+    // set server socket to non-blocking mode
     if (fcntl(this->_ServerFd, F_SETFL, O_NONBLOCK) == -1)
         throw std::runtime_error("Erreur : impossible de passer le socket en non bloquant.");
 
-    // struct qui stocke les iformation dune adresse ip
     struct sockaddr_in test;
-
-    // Nettoyage de la structure
     memset(&test, 0, sizeof(test));
-
-    //  Remplissage des parametres
-    test.sin_family = AF_INET;         // famille de ladresse (ipv4 pour nous)
-    test.sin_addr.s_addr = INADDR_ANY; // ecoute sur tout les adresse ip disponible sur la machine
+    test.sin_family = AF_INET;
+    test.sin_addr.s_addr = INADDR_ANY;
     test.sin_port = htons(this->_port);
 
-    // Attachement du socket au port avec bind()
+    // bind socket to specified port and address
     if (bind(this->_ServerFd, (struct sockaddr *)&test, sizeof(test)) == -1)
         throw std::runtime_error("Erreur");
+        
     // mais le socket en attente de connexion entrante
     if (listen(this->_ServerFd, SOMAXCONN) == -1)
         throw std::runtime_error("error");
+        
     this->_EpollFD = epoll_create1(0);
     if (this->_EpollFD == -1)
         throw std::runtime_error("Erreur");
+        
     struct epoll_event struct_epoll;
     memset(&struct_epoll, 0, sizeof(struct_epoll));
     struct_epoll.events = EPOLLIN; //  previens si des donnees ou une nouvelle commexion est en attente
     struct_epoll.data.fd = this->_ServerFd;
     if (epoll_ctl(this->_EpollFD, EPOLL_CTL_ADD, this->_ServerFd, &struct_epoll) == -1)
         throw std::runtime_error("epoll ctl fail\n");
-
     LoopServer();
 }
 
+// wait for events in epoll loop and dispatch to accept or receive
 bool Server::LoopServer()
 {
     while (true)
     {
-        int nfds = epoll_wait(this->_EpollFD, this->events, 10, -1);
+        int nfds = epoll_wait(this->_EpollFD, this->events, 100, -1);
+        if (nfds == -1)
+            break;
         for (int i = 0; i < nfds; i++)
         {
             int FdClient = events[i].data.fd;
-            // si c un nouveau clients
             if (FdClient == this->_ServerFd)
                 AcceptNewClient();
-            else // sinon c un cleint qui est deja dans notre seveur
+            else
                 ReceiveFromClient(FdClient);
         }
     }
+    return (true);
 }
 
+// accept incoming client connection set non-blocking and register to epoll
 void Server::AcceptNewClient(void)
 {
     int NewFdClient = accept(this->_ServerFd, NULL, NULL);
@@ -94,6 +95,7 @@ void Server::AcceptNewClient(void)
         return;
     }
     _Client[NewFdClient] = Client();
+    std::cout << "client accepter" << std::endl;
 }
 
 void Server::ReceiveFromClient(int fd)
@@ -106,7 +108,6 @@ void Server::ReceiveFromClient(int fd)
     {
         Receive[DataClient] = '\0';
         _Client[fd].addToBuffer(Receive);
-        std::cout << "Données reçues : " << Receive << std::endl;
         ParsBuffer(fd);
     }
     else if (DataClient == 0)
@@ -143,7 +144,6 @@ void Server::DisconnectClient(int fd, std::string reason)
         else
             ++it;
     }
-
     epoll_ctl(this->_EpollFD, EPOLL_CTL_DEL, fd, NULL);
     close(fd);
     _Client.erase(itClient);

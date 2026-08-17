@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:17:55 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/05 14:36:01 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 17:42:34 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int main(int ac, char **av)
         std::cerr << "ERROR " << e.what() << std::endl;
         return 1;
     }
-
     return (0);
 }

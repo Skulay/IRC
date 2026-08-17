@@ -6,12 +6,13 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:48:23 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 19:04:53 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:16:27 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+// parse username  and check if validate client registration
 void Server::ExecuteUser(int fd, std::string Argv)
 {
     if (!_Client[fd].GetPassClient())
@@ -43,9 +44,10 @@ void Server::ExecuteUser(int fd, std::string Argv)
     _Client[fd].setUsername(username);
     _Client[fd].SetUserNameB(true);
     if (_Client[fd].GetPassClient() && _Client[fd].GetNickClient() && _Client[fd].GetUserNameClient())
-        _Client[fd].SetValidClient(fd,true);
+        _Client[fd].SetValidClient(fd, true);
 }
 
+// mark client as fully authenticated and send standard irc welcome numeric replies
 void Client::SetValidClient(int fd, int isvalide)
 {
 

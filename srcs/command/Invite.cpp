@@ -6,12 +6,13 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/12 15:43:45 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 13:24:34 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:43:41 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+// parse invite arguments target and channel then validate and send invitation notification
 void Server::ExecuteInvite(int fd, std::string Argv)
 {
     if (Argv.empty())
@@ -20,7 +21,6 @@ void Server::ExecuteInvite(int fd, std::string Argv)
         send(fd, errMsg.c_str(), errMsg.length(), 0);
         return;
     }
-
     std::string cible;
     std::string channel;
 
@@ -49,7 +49,6 @@ void Server::ExecuteInvite(int fd, std::string Argv)
     }
     if (!ValideInvite(fd, cible, channel))
         return;
-    // invite le user
     Channel *chan = getChannelByName(channel);
     if (chan)
         chan->addInvited(cible);
@@ -63,6 +62,7 @@ void Server::ExecuteInvite(int fd, std::string Argv)
     }
 }
 
+// validate channel membership target existence and operator rights before inviting user
 bool Server::ValideInvite(int fd, std::string cible, std::string channel)
 {
     std::string userNick = _Client[fd].getNickname();

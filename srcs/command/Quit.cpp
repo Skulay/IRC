@@ -6,12 +6,13 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/15 15:57:51 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 19:01:01 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:24:33 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
+// parse quit reason and disconnect client from server
 void Server::ExecuteQuit(int fd, std::string Argv)
 {
     std::string reason = "Client Quit";
@@ -26,10 +27,10 @@ void Server::ExecuteQuit(int fd, std::string Argv)
     DisconnectClient(fd, reason);
 }
 
+// remove client from channel broadcast part notification and delete channel if empty
 void Server::ExecutePart(int fd, std::string Argv)
 {
     if (Argv.empty())
-
     {
         std::string errMsg = ":irc.local 461 " + _Client[fd].getNickname() + " PART :Not enough parameters\r\n";
         send(fd, errMsg.c_str(), errMsg.length(), 0);

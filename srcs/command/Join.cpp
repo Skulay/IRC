@@ -6,11 +6,12 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 18:55:43 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 13:23:43 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 18:41:47 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
+// parse join arguments check channel constraints like invite limit and key then add member or create channel
 void Server::ExecuteJoin(int fd, std::string Argv)
 {
     if (Argv.empty() || Argv[0] != '#')
@@ -57,19 +58,15 @@ void Server::ExecuteJoin(int fd, std::string Argv)
             return;
         }
     }
-
     Channel newSalon(channel);
-
     newSalon.addMember(fd, _Client[fd]);
-
     newSalon.addOperator(_Client[fd].getNickname());
-
     _Channel.push_back(newSalon);
     std::string Welcome2 = ":" + _Client[fd].getNickname() + "!" + _Client[fd].getUsername() + "@localhost JOIN :" + channel + "\r\n";
-
     send(fd, Welcome2.c_str(), Welcome2.length(), 0);
 }
 
+// broadcast join notification to all channel members and send topic and names list replies
 void Server::SendMessage(int fd, std::string Argv)
 {
     for (std::vector<Channel>::iterator it = this->_Channel.begin(); it != this->_Channel.end(); ++it)
