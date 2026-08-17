@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:54:12 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:34:48 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 12:05:31 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,9 @@ void Server::DisconnectClient(int fd, std::string reason)
     std::string nick = itClient->second.getNickname();
     std::string user = itClient->second.getUsername();
     std::string quitMsg = ":" + nick + "!" + user + "@localhost QUIT :" + reason + "\r\n";
-    for (std::vector<Channel>::iterator it = _Channel.begin(); it != _Channel.end(); ++it)
+    
+    std::vector<Channel>::iterator it = _Channel.begin();
+    while (it != _Channel.end())
     {
         if (it->hasMember(nick))
         {
@@ -133,11 +135,11 @@ void Server::DisconnectClient(int fd, std::string reason)
         }
         if (it->getMembers().empty())
             it = _Channel.erase(it);
+        else
+            ++it;
     }
 
     epoll_ctl(this->_EpollFD, EPOLL_CTL_DEL, fd, NULL);
-
     close(fd);
-
     _Client.erase(itClient);
 }

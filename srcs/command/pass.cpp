@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:43:54 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:44:54 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 12:06:51 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void Server::ExecutePass(int fd, std::string Argv)
     {
         std::string msg = ":ircserv 464 * :Password incorrect\r\n";
         send(fd, msg.c_str(), msg.length(), 0);
+        DisconnectClient(fd, "Password incorrect");
     }
 }

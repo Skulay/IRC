@@ -6,7 +6,7 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:22:39 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:49:49 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 12:05:04 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include <algorithm>
 #include <map>
 #include <fcntl.h>
+#include <csignal>
 #include "Client.hpp"
 #include "Channel.hpp"
 

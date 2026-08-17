@@ -6,13 +6,14 @@
 /*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/03 14:55:19 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/16 17:46:03 by alehamad         ###   ########.fr       */
+/*   Updated: 2026/08/17 12:04:51 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/Server.hpp"
 
 Server::Server() {
+    signal(SIGPIPE, SIG_IGN);
     InitCommands(); 
     InitBotCommands();
 }

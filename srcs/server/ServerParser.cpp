@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ServerParser.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alehamad <alehamad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:55:16 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/15 18:37:49 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/17 12:08:08 by alehamad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,13 @@
 void Server::ParsBuffer(int fd)
 {
     std::string buffer = _Client[fd].getBuffer();
+    if (buffer.size() > 65536)
+    {
+        DisconnectClient(fd, "Excess flood");
+        return;
+    }
+    
     size_t pos = buffer.find("\n");
-
     while (pos != std::string::npos)
     {
         std::string command = buffer.substr(0, pos);
