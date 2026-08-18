@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:55:16 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 18:12:08 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/18 14:10:56 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void Server::ParsBuffer(int fd)
 // delet a '\n' and split line into command name and arguments
 void Server::SplitBuffer(std::string buffer, int fd)
 {
-    if ((!buffer.empty() && buffer[buffer.length() - 1] == '\r') || buffer[buffer.length() - 1] == '\n')
+    if (!buffer.empty() && (buffer[buffer.length() - 1] == '\r' || buffer[buffer.length() - 1] == '\n'))
         buffer.erase(buffer.length() - 1);
 
     std::string cmd;
@@ -79,7 +79,6 @@ bool Server::IsValidNickName(std::string Argv, int fd)
         send(fd, ErrorEmpty.c_str(), ErrorEmpty.length(), 0);
         return true;
     }
-
     std::map<int, Client>::iterator it;
     for (it = _Client.begin(); it != _Client.end(); ++it)
     {

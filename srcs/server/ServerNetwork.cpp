@@ -6,7 +6,7 @@
 /*   By: amkhelif <amkhelif@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/10 15:54:12 by amkhelif          #+#    #+#             */
-/*   Updated: 2026/08/17 18:13:19 by amkhelif         ###   ########.fr       */
+/*   Updated: 2026/08/18 13:58:18 by amkhelif         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void Server::AcceptNewClient(void)
         return;
     }
     _Client[NewFdClient] = Client();
-    std::cout << "client accepter" << std::endl;
 }
 
 void Server::ReceiveFromClient(int fd)
